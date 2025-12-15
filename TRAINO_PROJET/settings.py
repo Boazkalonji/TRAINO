@@ -1,5 +1,7 @@
 from pathlib import Path
 import os
+import dj_database_url
+import whitenoise.middleware
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -7,19 +9,50 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-*)uqh)#%-l=i!un7kgc0jq47_7r=n21jtvj_q3@$v6ex-+r0)j'
 
-
-DEBUG = True
-
-ALLOWED_HOSTS = [
-]
-
 """
-ALLOWED_HOSTS = [
-    '127.0.0.1',
-    'localhost',
-    '10.103.58.224'
-]
+    DEBUG = True
+    
+    ALLOWED_HOSTS = [
+    ]
+    
+    ALLOWED_HOSTS = [
+        '127.0.0.1',
+        'localhost',
+        '10.103.58.224'
+    ]
 """
+
+
+
+
+
+
+
+URL_DEFAUT_RENDER = 'postgresql://traino_user:U3zSlRLEh9SZwtcd1pjhBiSvfsgtMBhC@dpg-d5027ef5r7bs73apajeg-a.virginia-postgres.render.com/traino'
+
+
+IS_RENDER_PRODUCTION = os.environ.get('IS_RENDER_PRODUCTION', 'False') == 'True'
+# ----------------------------------------------------------------------
+
+
+if IS_RENDER_PRODUCTION:
+    # Réglages de production sur Render
+    DEBUG = False
+    
+    # Render va injecter le nom d'hôte dans cette variable d'environnement
+    RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+    
+    # Le nom d'hôte externe de Render est requis
+    ALLOWED_HOSTS = [RENDER_EXTERNAL_HOSTNAME]
+
+else:
+    # Réglages de développement local
+    DEBUG = True
+    ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '10.103.58.224']
+
+
+
+
 
 
 INSTALLED_APPS = [
@@ -51,6 +84,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -81,7 +115,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'TRAINO_PROJET.wsgi.application'
 
 
-
+"""
 
 
 DATABASES = {
@@ -98,6 +132,45 @@ DATABASES = {
         }
     }
 }
+"""
+
+
+
+
+
+
+URL_DEFAUT_RENDER = 'postgresql://traino_user:U3zSlRLEh9SZwtcd1pjhBiSvfsgtMBhC@dpg-d5027ef5r7bs73apajeg-a.virginia-postgres.render.com/traino'
+
+URL_DEFAUT_LOCAL = 'postgresql://postgres:kalonji082@127.0.0.1:5432/TRAINO' 
+
+if DEBUG:
+    
+    DEFAULT_DB_URL = URL_DEFAUT_LOCAL
+
+else:
+    
+    DEFAULT_DB_URL = os.environ.get('DATABASE_URL', URL_DEFAUT_RENDER)
+
+
+DATABASES = {
+    'default': dj_database_url.config(
+        default=DEFAULT_DB_URL, 
+        conn_max_age=600  
+    )
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -136,6 +209,9 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR/'TRAINO_PROJET/static'
 ]
+
+
+STATIC_ROOT = BASE_DIR / 'staticfiles' # Rend les fichiers statiques disponibles pour Render
 
 
 
