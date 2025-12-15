@@ -1,0 +1,43 @@
+@csrf_exempt
+def scannage_verifiaction_paiement(request):
+    if request.method != 'POST':
+        return JsonResponse({'status': 'error', 'message': 'Méthode non autorisée.'}, status=405) 
+    try:
+        data = json.loads(request.body)
+        ticket_code = data.get('ticket_code')
+        
+        if not ticket_code:
+            return JsonResponse({'status': 'error', 'message': 'Code de billet manquant.'}, status=400)
+
+        try:
+     
+            billet = Paiement.objects.get(numero_billet=ticket_code)
+            
+           
+            if billet.statut == False: 
+
+                return JsonResponse({
+                    'status': 'error', 
+                    'message': 'Billet déjà utilisé ou expiré.',
+                   
+                    'passenger_name': f'Mr/Mme {billet.id_user.username} a déjà utilisé son billet.'
+                })
+ 
+            billet.statut = False  
+            billet.save()          
+            
+            return JsonResponse({
+                'status': 'success', 
+                'message': 'Ticket validé avec succès.',
+                'passenger_name': f'Mr/Mme {billet.id_user.username} : Billet validé.'
+            })
+            
+        except Paiement.DoesNotExist:
+          
+            return JsonResponse({
+                'status': 'error', 
+                'message': 'Code de billet invalide ou introuvable.'
+            })
+
+    except json.JSONDecodeError:
+        return JsonResponse({'status': 'error', 'message': 'Format de données invalide.'}, status=400)

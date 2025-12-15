@@ -1,0 +1,83 @@
+{% extends 'front/header/header.html' %}
+{% load static %}
+
+
+
+    
+
+{% block containter%}
+
+
+
+
+
+
+
+
+
+    
+
+    <div class="container content-wrapper-light pt-5">
+        
+        <form action="{% url 'voyage:creation_voyage' %}" method="POST" class="creation-form p-5 rounded-3 shadow-lg">
+            {% csrf_token %}
+            <h3 class="mb-4 text-center text-secondary">Rédefinir un Nouveau Voyage (Traino)</h3>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <label for="numero_train" class="form-label">Numéro Train <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-train"></i></span>
+                        
+                        <select class="form-select" id="id_train" name="id_train" required>
+                            
+                        
+                            {% for train in trains %}  
+                                <option value="{{ train.id }}">{{ train.numero_train }}</option> 
+                            {% endfor %}
+                        
+                        </select>
+                        
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label for="date_depart" class="form-label">Date de Départ <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                        <input type="date" 
+                        class="form-control" id="date_depart" 
+                        placeholder="{{voyage.date_depart}}"
+                        value="{{voyage.date_depart}}"
+                        name="date_depart" required>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label for="heure_depart" class="form-label">Heure de Départ <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-clock"></i></span>
+                        <input type="time" 
+                        class="form-control" 
+                        placeholder="{{voyage.heure_depart}}"
+                        value="{{voyage.heure_depart}}"
+                        id="heure_depart" name="heure_depart" required>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="d-grid mt-5">
+                <button type="submit" class="btn btn-lg btn-danger fw-bold">
+                    <i class="fas fa-plus-circle me-2"></i> Valider
+                </button>
+            </div>
+
+        </form>
+    </div>
+
+
+
+
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,79 @@
+{% load static %}
+
+
+<link rel="stylesheet" href="{% static 'css/front/footer.css' %}">
+
+
+<footer class="bg-dark text-white pt-5 pb-4 mt-5">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-lg-4 col-md-6 mb-4">
+                <h5 class="text-uppercase fw-bold mb-3 text-danger">
+                    <i class="fas fa-train me-2"></i> TRAINO PROJET
+                </h5>
+                <p class="small text-white-50">
+                    Société anonyme de transport ferroviaire. Nous nous engageons à fournir des services de réservation et de voyage sûrs et efficaces.
+                </p>
+                <div class="d-flex mt-3">
+                    <a href="#" class="text-white me-3"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-white me-3"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="text-white"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+
+            <div class="col-lg-2 col-md-6 mb-4">
+                <h5 class="text-uppercase fw-bold mb-3">Navigation</h5>
+                <ul class="list-unstyled">
+                    <li><a href="{% url 'front:index' %}" class="text-white-50 text-decoration-none mb-2 d-block">Accueil</a></li>
+                    {% if user.is_authenticated %}
+                    <li><a href="{% url 'reservation_paiement:reservation_paiement' %}" class="text-white-50 text-decoration-none mb-2 d-block">Réserver</a></li>
+                    <li><a href="{% url 'tarification:grille_tarifaire' %}" class="text-white-50 text-decoration-none mb-2 d-block">Grille tarifaire</a></li>
+                    <li><a href="{% url 'reservation_paiement:scannage' %}" class="text-white-50 text-decoration-none mb-2 d-block">Scannage</a></li>
+                    <li><a href="{% url 'utilisateur:profil' %}" class="text-white-50 text-decoration-none mb-2 d-block">Mon Profil</a></li>
+                    {% else %}
+                    <li><a href="{% url 'utilisateur:login_comptes' %}" class="text-white-50 text-decoration-none mb-2 d-block">Connexion</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+
+            <div class="col-lg-3 col-md-6 mb-4">
+                <h5 class="text-uppercase fw-bold mb-3">Gestion & Ressources</h5>
+                <ul class="list-unstyled">
+                    {% if user.is_authenticated %}
+                    <li><a href="{% url 'details_voyage:lire_details_voyage' %}" class="text-white-50 text-decoration-none mb-2 d-block">Détails voyage</a></li>
+                    <li><a href="{% url 'gare:lire_gare' %}" class="text-white-50 text-decoration-none mb-2 d-block">Gare & Trajet</a></li>
+                    <li><a href="{% url 'train:lire_train' %}" class="text-white-50 text-decoration-none mb-2 d-block">Gestion Trains</a></li>
+                    <li><a href="{% url 'voyage:lire_voyage' %}" class="text-white-50 text-decoration-none mb-2 d-block">Planification Voyage</a></li>
+                    <li><a href="{% url 'publication_avis:lire_publication_avis' %}" class="text-white-50 text-decoration-none mb-2 d-block">Publications & Avis</a></li>
+                    {% else %}
+                    <li><a href="#" class="text-white-50 text-decoration-none mb-2 d-block">Termes et Conditions</a></li>
+                    <li><a href="#" class="text-white-50 text-decoration-none mb-2 d-block">Politique de Confidentialité</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+
+            <div class="col-lg-3 col-md-6 mb-4">
+                <h5 class="text-uppercase fw-bold mb-3">Rapports & Contact</h5>
+                <ul class="list-unstyled">
+                    {% if user.is_authenticated %}
+                    <li><a href="{% url 'reservation_paiement:rapport_journalier_cash' %}" class="text-white-50 text-decoration-none mb-2 d-block">Rapport Cash</a></li>
+                    <li><a href="{% url 'reservation_paiement:rapport_journalier_cash_mobile' %}" class="text-white-50 text-decoration-none mb-2 d-block">Rapport Cash & Mobile</a></li>
+                    <li><a href="{% url 'reservation_paiement:rapport_jour_cash_mobile' %}" class="text-white-50 text-decoration-none mb-2 d-block">Télécharger Rapport</a></li>
+                    {% endif %}
+                    
+                    <li class="mt-3"><i class="fas fa-home me-2"></i> Kinshasa, RDC</li>
+                    <li><i class="fas fa-envelope me-2"></i> info@traino.com</li>
+                    <li><i class="fas fa-phone me-2"></i> +243 827400223</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row mt-4 border-top border-secondary pt-3">
+            <div class="col-12 text-center">
+                <p class="mb-0 small text-white-50">&copy; {% now "Y" %} TRAINO PROJET. Tous droits réservés.</p>
+            </div>
+        </div>
+    </div>
+</footer>

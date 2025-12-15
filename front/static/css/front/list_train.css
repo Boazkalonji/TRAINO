@@ -1,0 +1,71 @@
+/* Couleurs */
+:root {
+    --primary-color: #dc3545; /* Rouge ONATRA/Danger */
+    --secondary-color: #6c757d;
+    --light-bg: #f8f9fa;
+    --dark-text: #212529;
+}
+
+body {
+    overflow-x: hidden;
+    background-color: var(--light-bg);
+    color: var(--dark-text);
+}
+
+#wrapper {
+    display: flex;
+}
+
+/* Sidebar Styling */
+#sidebar-wrapper {
+    min-height: 100vh;
+    margin-left: -15rem; /* Caché par défaut */
+    transition: margin 0.25s ease-out;
+    width: 15rem;
+    z-index: 1000;
+}
+
+.sidebar-heading {
+    padding: 0.875rem 1.25rem;
+    font-size: 1.2rem;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+    margin-left: 0; /* Affiché quand 'toggled' est actif */
+}
+
+.list-group-item.active {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    color: white !important;
+}
+.list-group-item-action:hover {
+    background-color: #e9ecef !important;
+}
+
+/* Page Content Styling */
+#page-content-wrapper {
+    min-width: 100vw;
+}
+
+/* Responsive adjustments */
+@media (min-width: 768px) {
+    #sidebar-wrapper {
+        margin-left: 0; /* Toujours affiché sur grand écran */
+    }
+    #page-content-wrapper {
+        min-width: 0;
+        width: 100%;
+    }
+    #wrapper.toggled #sidebar-wrapper {
+        margin-left: -15rem;
+    }
+}
+
+/* Tableau */
+.table th, .table td {
+    vertical-align: middle;
+}
+.table-hover tbody tr:hover {
+    background-color: #f1f1f1;
+}

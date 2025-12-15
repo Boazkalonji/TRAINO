@@ -1,0 +1,87 @@
+{% extends 'front/header/header.html' %}
+{% load static %}
+
+
+{% block extra_css %}
+
+    <link rel="stylesheet" href="{% static 'css/train/detail_train.css' %}">
+{% endblock %}
+
+
+{% block containter%}
+
+
+
+
+
+
+
+
+    <div class="container py-5">
+
+        <div class="row align-items-center mb-4">
+            <div class="col-md-9">
+                <h1 class="text-dark fw-bold mb-0">
+                    <i class="fas fa-eye me-2 text-danger"></i> Détails de la train
+                </h1>
+            </div>
+            <div class="col-md-3 text-end">
+
+                
+                <a href="{% url 'train:modifier_train' train.id train.slug %}" class="btn btn-warning shadow-sm me-2">
+                    <i class="fas fa-pencil-alt me-1"></i> Modifier
+                </a>
+
+                <a href="{% url 'train:lire_train' %}" class="btn btn-outline-secondary shadow-sm">
+                    <i class="fas fa-arrow-left me-1"></i> Retour
+                </a>
+            </div>
+        </div>
+
+        <div class="row g-4 mb-5">
+
+            <div class="col-lg-7">
+                <div class="card shadow-lg border-0 h-100">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i> Informations de Base</h5>
+                    </div>
+                    <div class="card-body">
+
+                        <dl class="row mb-0 details-list">
+
+                            <dt class="col-sm-4 text-muted">ID Unique :</dt>
+                            <dd class="col-sm-8 fw-bold">{{ train.id }}</dd>
+                            <dt class="col-sm-4 text-muted">numéro train :</dt>
+                            <dd class="col-sm-8 fw-bold">{{ train.num_train }}</dd>
+                            <dt class="col-sm-4 text-muted">taille de la ram :</dt>
+                            <dd class="col-sm-8 fw-bold">{{ train.taille_ram|upper }}</dd>
+                            <dt class="col-sm-4 text-muted">couleur :</dt>
+                            <dd class="col-sm-8 fw-bold">{{ train.couleur|upper }}</dd>
+
+                            <dt class="col-sm-4 text-muted">Désignation :</dt>
+                            <dd class="col-sm-8 fw-bold text-dark h5">{{ gare.ville_gare|upper }}</dd>
+
+   
+
+          
+                        
+                        </dl>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+
+<script src="{% static 'js/train/detail_train.js' %}"></script>
+
+{% endblock %}

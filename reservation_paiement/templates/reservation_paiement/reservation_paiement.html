@@ -1,0 +1,154 @@
+{% extends 'front/header/header.html' %}
+{% load static %}
+
+
+    {% block extra_css %}
+        <link rel="stylesheet" href="{% static 'css/reservation_paiement/reservation_paiement.css' %}">
+
+
+    {% endblock %}
+
+    
+
+    {% block containter%}
+
+        {% if erreur %}
+            <div class="alert alert-danger" role="alert">
+                <h4 class="alert-heading"> Erreur de Trajet</h4>
+                <p class="mb-0">
+                    <strong>{{ erreur }}</strong>
+                </p>
+            </div>
+        {% endif %}
+
+
+        <div class="container content-wrapper-light pt-5">
+    
+            <form action="{% url 'reservation_paiement:reservation_paiement' %}" method="POST" class="reservation-form p-5 rounded-3 shadow-lg">
+                {% csrf_token %}
+                <h3 class="mb-4 text-center">Saisie réservation et paiement <span><i class="fas fa-arrow-right"></i></span></h3>
+            
+                <div class="row g-4">
+
+
+                    <div class="col-md-4">
+                        <label for="id_gare_depart" class="form-label">Point de depart <span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                            <select class="form-select" id="id_gare_depart" name="id_gare_depart" required>
+                                <option value="" selected>Sélectionner votre point de depart</option>
+                                {% for gare in gares %}
+                                    <option value="{{gare.id}}" selected>{{gare.libelle_gare}}</option>
+                                {% empty %}
+                                    <p>pas des gares trouvées</p>
+                                {% endfor %}
+                             
+                            </select>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="col-md-4">
+                        <label for="id_gare_arrivee" class="form-label">Point d'arrivée <span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-map-marked-alt"></i></span>
+                            <select class="form-select" id="id_gare_arrivee" name="id_gare_arrivee" required>
+                                <option value="" selected>Sélectionner votre point d'arrivée</option>
+                                {% for gare in gares %}
+                                    <option value="{{gare.id}}" selected>{{gare.libelle_gare}}</option>
+                                {% empty %}
+                                    <p>pas des gares trouvées</p>
+                                {% endfor %}
+                             
+                            </select>
+                        </div>
+                    </div>
+
+
+
+
+
+                    <div class="col-md-4">
+                        <label for="id_train" class="form-label">Choix du train<span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-train"></i></span>
+                            <select class="form-select" id="id_train" name="id_train" required>
+                                <option value="" selected>Sélectionner votre point de depart</option>
+                                {% for train in trains %}
+                                    <option value="{{train.id}}" selected>{{train.numero_train}}</option>
+                                {% empty %}
+                                    <p>pas des trains trouvées</p>
+                                {% endfor %}
+                             
+                            </select>
+                        </div>
+                    </div>
+
+
+
+                    <div class="col-md-4">
+                        <label for="tarification" class="form-label">choix tarification<span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-tags"></i></span>
+                            <select class="form-select" id="tarification" name="tarification" required>
+                                <option value="" selected>Sélectionner une categorie</option>
+                                
+                                <option value="luxe" selected>luxe</option>
+                                <option value="premium" selected>premium</option>
+                                <option value="1èreclasse" selected>première classe</option>
+
+                            </select>
+                        </div>
+                    </div>
+
+
+
+                    
+                
+
+                    <div class="col-md-4">
+                        <label for="nbr_adulte" class="form-label">Nombre de place adulte</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
+                            <input min = "1"  type="number" class="form-control" id="nbr_adulte" name="nbr_adulte" placeholder="Ex: 1" required>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="nbr_enfant" class="form-label">Nombre d'enfant 6 à 10 ans</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-child"></i></span>
+                            <input min = "1" max = "8" type="number" class="form-control" id="nbr_enfant" name="nbr_enfant" placeholder="EX: 1">
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+                
+
+
+
+
+
+            
+                <div class="d-grid mt-5">
+                    <button type="submit" class="btn btn-lg btn-danger fw-bold">
+                        <i class="fas fa-check-circle me-2"></i> Suivant
+                    </button>
+                </div>
+
+            </form>
+        </div>
+        
+        
+        
+
+
+
+
+
+    {% endblock %}

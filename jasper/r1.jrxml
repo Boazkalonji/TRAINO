@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="r1" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="cd298126-68fa-4284-8156-26a2c17c8879">
+	<property name="com.jaspersoft.studio.data.sql.tables">
+		<![CDATA[YXV0aF91c2VyICwxNSwyNjcsMjI3ZGUwYjctOGNjYi00OWI3LWFmMjctNGViOThiOTFiMjVjO2Rl
+dGFpbHNfdm95YWdlX2RldGFpbHNfdm95YWdlICwyMDksMTgzLGI3ZWFmMWZkLTk4OGMtNDI3Ni04
+OTM5LTliZWJkMzUwMzE2YjtyZXNlcnZhdGlvbl9wYWllbWVudF9wYWllbWVudCAsNjUwLDE4Nyxj
+ZTFlOTUyYy00NTQwLTRiYzItYjU5Yy00NDA5YmIyMzAzNGY7Z2FyZV9nYXJlIEFTICwyMDksMTUs
+ZjI2MzA3ODEtYzhkNi00ZjkxLWE0YTQtY2Q5MmE2ODFhOWMxO2dhcmVfZ2FyZSBBUyAsMTUsOTks
+YTFlYzY2NjctY2E3MC00NTU1LTg5ZTAtNjYwMjcyYmFlNTUwO3Jlc2VydmF0aW9uX3BhaWVtZW50
+X21vZGVfcGFpZW1lbnQgLDQwOCwxMjEsNzNjZDlhYTEtOTBkMC00Nzg5LWE0MjAtNWFkOWI1MjNm
+MjM4O3RhcmlmaWNhdGlvbl90YXJpZmljYXRpb24gLDQwOCwyMzcsOTY5OWY2YzYtYWZmYy00OTJl
+LWI3OTYtODJlNzFiMTM1MDEzOw==]]>
+	</property>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Rapport_journalier_cash_mobile"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT reservation_paiement_paiement.date_paiement,
+	reservation_paiement_paiement.nombre_place_reserve,
+	reservation_paiement_paiement.montant_paiement,
+	gare_gare_depart.libelle_gare AS gare_depart,
+	gare_gare_arrive.libelle_gare AS gare_arrivée,
+	tarification_tarification.designation_tarififcation,
+	reservation_paiement_mode_paiement.libelle_mode,
+	auth_user.username
+FROM reservation_paiement_paiement
+	INNER JOIN reservation_paiement_mode_paiement ON 
+	 reservation_paiement_mode_paiement.id = reservation_paiement_paiement.id_mode_paiement_id 
+	INNER JOIN tarification_tarification ON 
+	 tarification_tarification.id = reservation_paiement_paiement.id_tarification_id 
+	INNER JOIN details_voyage_details_voyage ON 
+	 details_voyage_details_voyage.id = tarification_tarification.id_details_voyage_id 
+	INNER JOIN gare_gare AS gare_gare_depart ON 
+	 gare_gare_depart.id = details_voyage_details_voyage.id_gare_depart_id 
+	INNER JOIN gare_gare AS gare_gare_arrive ON 
+	 gare_gare_arrive.id = details_voyage_details_voyage.id_gare_arrive_id 
+	INNER JOIN auth_user ON 
+	 auth_user.id = reservation_paiement_paiement.id_user_id]]>
+	</queryString>
+	<field name="date_paiement" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="date_paiement"/>
+		<property name="com.jaspersoft.studio.field.label" value="date_paiement"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="reservation_paiement_paiement"/>
+	</field>
+	<field name="nombre_place_reserve" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="nombre_place_reserve"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombre_place_reserve"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="reservation_paiement_paiement"/>
+	</field>
+	<field name="montant_paiement" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="montant_paiement"/>
+		<property name="com.jaspersoft.studio.field.label" value="montant_paiement"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="reservation_paiement_paiement"/>
+	</field>
+	<field name="gare_depart" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="gare_depart"/>
+		<property name="com.jaspersoft.studio.field.label" value="gare_depart"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="gare_gare"/>
+	</field>
+	<field name="gare_arrivée" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="gare_arrivée"/>
+		<property name="com.jaspersoft.studio.field.label" value="gare_arrivée"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="gare_gare"/>
+	</field>
+	<field name="designation_tarififcation" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="designation_tarififcation"/>
+		<property name="com.jaspersoft.studio.field.label" value="designation_tarififcation"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tarification_tarification"/>
+	</field>
+	<field name="libelle_mode" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="libelle_mode"/>
+		<property name="com.jaspersoft.studio.field.label" value="libelle_mode"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="reservation_paiement_mode_paiement"/>
+	</field>
+	<field name="username" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="username"/>
+		<property name="com.jaspersoft.studio.field.label" value="username"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="auth_user"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="72" height="30" uuid="815e3c2c-a659-44d2-9d23-b25f71dcfda5">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="58f33d6e-7976-4840-bf23-3be70d4d7628"/>
+				</reportElement>
+				<text><![CDATA[date_paiement]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="72" y="0" width="69" height="30" uuid="a316ff2c-adb6-4d9b-86e5-96c9849f3d5c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="883d3e82-3a75-477a-b3cf-155918eb8005"/>
+				</reportElement>
+				<text><![CDATA[nombre_place_reserve]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="141" y="0" width="69" height="30" uuid="8f47e5c5-f4b7-4130-b6c3-682fef9a8efa">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="42c75ea2-5705-458c-9202-29445fe14cfa"/>
+				</reportElement>
+				<text><![CDATA[montant_paiement]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="210" y="0" width="69" height="30" uuid="bc9f7f38-d1b4-4615-9a1e-3eb7246083b9">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4df711d7-489a-4e92-af1c-f6d2ab6f7056"/>
+				</reportElement>
+				<text><![CDATA[gare_depart]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="279" y="0" width="69" height="30" uuid="f8b7951f-6cf3-492c-9c6c-299cd86d0938">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f453badd-5d4e-4235-94b2-65cabeca6074"/>
+				</reportElement>
+				<text><![CDATA[gare_arrivée]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="348" y="0" width="69" height="30" uuid="cd056d41-ea4b-4364-9453-286933eb6e63">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ce429d6b-94c8-4d73-b5de-3dadf495403e"/>
+				</reportElement>
+				<text><![CDATA[designation_tarififcation]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="417" y="0" width="69" height="30" uuid="bfe620e9-9e68-47e9-9830-1c894665d16f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1fa00f3e-74ec-4c02-8d8e-7a1e34caf852"/>
+				</reportElement>
+				<text><![CDATA[libelle_mode]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="486" y="0" width="69" height="30" uuid="1a3dc973-ec41-4fd0-be60-1079f3e796d9">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="eeb73d3f-1803-4d9f-8a31-1294474c72c0"/>
+				</reportElement>
+				<text><![CDATA[username]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="72" height="30" uuid="522eece3-a236-4071-b161-13114d17c258">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="58f33d6e-7976-4840-bf23-3be70d4d7628"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{date_paiement}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="72" y="0" width="69" height="30" uuid="8b9fbad2-86a6-43cf-9029-905070142fab">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="883d3e82-3a75-477a-b3cf-155918eb8005"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{nombre_place_reserve}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="141" y="0" width="69" height="30" uuid="2f603e85-4cd8-434d-b84a-9a3d015b18e8">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="42c75ea2-5705-458c-9202-29445fe14cfa"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{montant_paiement}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="210" y="0" width="69" height="30" uuid="1693f05e-bfad-4159-a63c-4fb6b2553aad">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4df711d7-489a-4e92-af1c-f6d2ab6f7056"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{gare_depart}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="279" y="0" width="69" height="30" uuid="254c93b0-39eb-4665-b661-fb0ee6ecf122">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f453badd-5d4e-4235-94b2-65cabeca6074"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{gare_arrivée}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="348" y="0" width="69" height="30" uuid="ef070f99-1eee-4025-a0db-8bee105ad79e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ce429d6b-94c8-4d73-b5de-3dadf495403e"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{designation_tarififcation}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="417" y="0" width="69" height="30" uuid="0d6d76fa-cd1e-4df8-a635-6d87c40af1ad">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1fa00f3e-74ec-4c02-8d8e-7a1e34caf852"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{libelle_mode}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="486" y="0" width="69" height="30" uuid="e539bf45-b971-4d9a-8ac9-de49a2935029">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="eeb73d3f-1803-4d9f-8a31-1294474c72c0"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{username}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

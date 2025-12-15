@@ -1,0 +1,67 @@
+/* Couleurs Thème Clair */
+:root {
+    --light-background: #f8f9fa; 
+    --form-background: #ffffff; 
+    --text-color: #212529;      
+    --danger-color: #dc3545;     /* Rouge ONATRA */
+    --success-color: #28a745;    /* Vert pour le bouton Download */
+    --border-color: #dee2e6;     
+}
+
+body {
+    background-color: var(--light-background);
+    color: var(--text-color);
+    padding-top: 70px;
+}
+
+/* 🚂 Navbar (Clair) */
+#main-navbar-light {
+    background-color: var(--form-background) !important;
+    border-bottom: 1px solid var(--border-color);
+}
+.navbar-brand .text-danger {
+    color: var(--danger-color) !important;
+}
+.btn-secondary {
+    color: #fff;
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+/* 🏷️ Carte Tarifaire */
+.tariff-card {
+    border: none; /* La carte utilise l'ombre et le header coloré pour se démarquer */
+}
+.tariff-card .card-header {
+    background-color: var(--danger-color) !important; /* En-tête rouge */
+    font-weight: bold;
+    border-bottom: none;
+}
+.tariff-card .card-title {
+    color: var(--text-color);
+    font-weight: bold;
+}
+
+/* 📊 Table Tarifaire */
+.tariff-table th, .tariff-table td {
+    white-space: nowrap; /* Empêche les entêtes de ligne de sauter si l'écran est petit */
+    font-size: 0.95rem;
+}
+.tariff-table .table-dark th {
+    background-color: #343a40;
+    color: white;
+}
+.tariff-table .table-info {
+    background-color: #cce5ff; /* Ligne d'exemple pour le sens inverse */
+    font-weight: bold;
+}
+
+/* Bouton Téléchargement */
+.btn-success {
+    background-color: var(--success-color);
+    border-color: var(--success-color);
+}
+.btn-success:hover {
+    background-color: #1e7e34;
+    border-color: #1c7430;
+}

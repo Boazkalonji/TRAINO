@@ -1,0 +1,24 @@
+{% extends '../head.html' %}
+{% load static %}
+
+    
+
+
+    {% block containter %}
+
+        <div class="container mt-5">
+            {% if activation_complete %}
+                <div class="alert alert-success" role="alert">
+                    <h2>🥳 Compte Activé !</h2>
+                    <p>Félicitations, {{ account.username }} ! Votre compte est maintenant actif.</p>
+                    <p>Vous pouvez vous <a href="{% url 'utilisateur:login_comptes' %}">connecter</a> dès maintenant.</p>
+                </div>
+            {% else %}
+                <div class="alert alert-danger" role="alert">
+                    <h2>😔 Échec de l'Activation</h2>
+                    <p>Le lien d'activation est invalide ou a expiré.</p>
+                    <p>Veuillez vérifier votre boîte de réception ou contacter le support.</p>
+                </div>
+            {% endif %}
+        </div>
+{% endblock content %}

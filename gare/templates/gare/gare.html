@@ -1,0 +1,49 @@
+{% extends 'front/header/header.html' %}
+{% load static %}
+
+
+    {% block extra_css %}
+        <link rel="stylesheet" href="{% static 'css/gare/gare.css' %}">
+
+    {% endblock %}
+
+    
+
+{% block containter%}
+
+    <div class="container content-wrapper-light pt-5">
+
+        <form action="{% url 'gare:creation_gare' %}" method="POST" class="creation-form p-5 rounded-3 shadow-lg">
+            {% csrf_token %}
+            <h3 class="mb-4 text-center text-secondary">Enregistrer une Nouvelle Gare</h3>
+
+            <div class="row g-4 justify-content-center">
+
+                <div class="col-md-8">
+                    <label for="libelle_gare" class="form-label">Libellé Gare <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-map-marked-alt"></i></span>
+                        <input type="text" class="form-control" id="libelle_gare" name="libelle_gare" placeholder="Ex: Gare Centrale de Kinshasa" required>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <label for="ville_gare" class="form-label">Ville de la Gare <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-city"></i></span>
+                        <input type="text" class="form-control" id="ville_gare" name="ville_gare" placeholder="Ex: Kinshasa" required>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="d-grid mt-5">
+                <button type="submit" class="btn btn-lg btn-danger fw-bold">
+                    <i class="fas fa-save me-2"></i> Enregistrer la Gare
+                </button>
+            </div>
+
+        </form>
+    </div>
+
+{% endblock %}

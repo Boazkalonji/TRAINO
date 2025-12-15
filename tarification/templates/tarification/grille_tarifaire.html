@@ -1,0 +1,94 @@
+{% extends 'front/header/header.html' %}
+{% load static %}
+
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/tarification/dashbord_tarification.css' %}">
+    <link rel="stylesheet" href="{% static 'css/tarification/detail_tarification.css' %}">
+{% endblock %}
+
+
+{% block containter%}
+
+
+    <section class="bg-primary text-white text-center py-4 mb-5">
+        <div class="container">
+            <h1 class="display-5">ONATRA</h1>
+            <p class="lead">OFFICE NATIONAL DES TRANSPORTS</p>
+        </div>
+    </section>
+
+    <main class="container">
+        <div class="card shadow-lg border-0">
+            <div class="card-header bg-success text-white">
+                <h2 class="card-title text-center mb-0">🚂 GRILLE TARIFAIRE DU TRAIN EXPRESS</h2>
+                <p class="text-center mb-0 mt-1"><small>Minimum de Perception : 100 KM</small></p>
+            </div>
+            <div class="card-body p-4">
+                <h3 class="h5 mb-3 text-muted">1. KINSHASA ↔ MATADI</h3>
+                
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover table-bordered" id="tarifTable">
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col" onclick="sortTable(0)">Gares/Arrêts <i class="fas fa-sort"></i></th>
+                                <th scope="col" onclick="sortTable(1)">Distance (Km) <i class="fas fa-sort"></i></th>
+                                <th scope="col" onclick="sortTable(2)">1ère Classe <i class="fas fa-sort"></i></th>
+                                <th scope="col" onclick="sortTable(3)">Premium <i class="fas fa-sort"></i></th>
+                                <th scope="col" onclick="sortTable(4)">Classe de Luxe <i class="fas fa-sort"></i></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {# La vue passe un dictionnaire regroupé sous la variable 'lignes_tableau' #}
+                            {% for ligne in lignes_tableau %}
+                                <tr>
+                                    
+                                   
+                                    <td>
+                                        {{ ligne.gare_depart }} 
+                                        - 
+                                        {{ ligne.gare_arrivee }}
+                                    </td>
+                                
+                               
+                                    <td>
+                                        {{ ligne.distance }}
+                                    </td>
+                                
+                                 
+                                    <td>
+                                        {# Accède à la clé du dictionnaire Python : '1ère Classe' #}
+                                        {{ ligne.1èreclasse|default:'N/A' }} 
+                                    </td>
+                                
+                                   
+                                    <td>
+                                        
+                                        {{ ligne.premium|default:'N/A' }} 
+                                    </td>
+                                
+                                   
+                                    <td>
+                                        {# Accède à la clé du dictionnaire Python : 'Luxe' #}
+                                        {{ ligne.luxe|default:'N/A' }} 
+                                    </td>
+                                
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="alert alert-info mt-4" role="alert">
+                    <i class="fas fa-info-circle"></i> **Note Importante** : Les montants sont exprimés en unité monétaire nationale.
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+
+<script src="{% static 'js/tarification/dashbord_tarification.css' %}"></script>
+
+
+{% endblock %}

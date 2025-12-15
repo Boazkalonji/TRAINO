@@ -1,0 +1,99 @@
+{% extends 'front/header/header.html' %}
+{% load static %}
+
+
+    {% block extra_css %}
+        <link rel="stylesheet" href="{% static 'css/publication_avis/publication_avis.css' %}">
+
+    {% endblock %}
+
+    
+
+{% block containter%}
+
+    <div class="container content-wrapper-light pt-5">
+
+        <form action="{% url 'publication_avis:modifier_publication_avis' publication_avis.id publication_avis.slug %}" method="POST" class="creation-form p-5 rounded-3 shadow-lg">
+            {% csrf_token %}
+            <h3 class="mb-4 text-center text-secondary">Rédefinir une Nouvelle Publication avis</h3>
+
+            <div class="row g-4 justify-content-center">
+
+                <div class="col-md-8">
+                    <label for="reference_avis" class="form-label">Réference avis<span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-map-marked-alt"></i></span>
+                        <input  type="text" 
+                                class="form-control" 
+                                id="reference_avis" 
+                                name="reference_avis" 
+                                value="{{publication_avis.reference_avis}}"
+                                placeholder="Ex:01,02 ETC." required>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <label for="titre_avis" class="form-label">titre avis<span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-city"></i></span>
+                        <input  type="text" 
+                                class="form-control" 
+                                id="titre_avis" 
+                                name="titre_avis"
+                                value="{{publication_avis.titre_avis}}" 
+                                placeholder="Ex: complement tarifs passages du train express" required>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <label for="date_avis" class="form-label">Date avis<span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-city"></i></span>
+                        <input  type="date" 
+                                class="form-control"
+                                value="{{publication_avis.date_avis}}"  
+                                id="date_avis" name="date_avis"required>
+                    </div>
+                </div>
+
+
+                <div class="col-12">
+                    <label for="message_avis" class="form-label">Message avis<span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-city"></i></span>
+                        <textarea  type="text" 
+                                    name="message_avis" 
+                                    value="{{publication_avis.message_avis}}" 
+                                    id="message_avis" class="form-control" required></textarea>
+    
+                    </div>
+                </div>
+
+
+                    <div class="col-12">
+                    <label for="consigne_avis" class="form-label">titre avis<span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-city"></i></span>
+                        <textarea type="text" name="consigne_avis" 
+                            id="consigne_avis" class="form-control" required
+                            value="{{publication_avis.consigne_avis}}"
+                            placeholder="EX: Le presnet avis au public qui complète les dispositions antérieures entre en vigeur à la date de sa signature"
+                        
+                        
+                        ></textarea>
+    
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="d-grid mt-5">
+                <button type="submit" class="btn btn-lg btn-danger fw-bold">
+                    <i class="fas fa-save me-2"></i> Enregistrer
+                </button>
+            </div>
+
+        </form>
+    </div>
+
+{% endblock %}

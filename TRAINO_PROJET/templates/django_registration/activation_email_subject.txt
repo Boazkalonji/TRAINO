@@ -1,0 +1,2 @@
+{% load i18n %}
+{% trans "Activation de votre Compte sur" %} {{ site.name }}

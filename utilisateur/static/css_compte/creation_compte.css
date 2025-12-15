@@ -1,0 +1,14 @@
+
+.form-control {
+
+    background-color: #f8f9fa; 
+    border-left: none; 
+}
+
+
+.input-group-text {
+    
+    background-color: #f8f9fa;
+    border-right: none;
+    color: #6c757d; 
+}

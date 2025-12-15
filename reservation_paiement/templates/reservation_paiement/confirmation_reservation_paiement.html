@@ -1,0 +1,158 @@
+{% extends 'front/header/header.html' %}
+{% load static %}
+
+
+    {% block extra_css %}
+        <link rel="stylesheet" href="{% static 'css/reservation_paiement/reservation_paiement.css' %}">
+
+    {% endblock %}
+
+    
+{% block containter%}
+    
+    {% if id_paiement %}
+        <div class="container content-wrapper-light pt-5">
+            <div class="container content-wrapper-light pt-5">
+            
+                <div class="card shadow-sm mb-4 border-info">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="mb-0">ℹ️ Détails du Paiement</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+
+                                <p class="mb-1"><strong>Informations du client : <i class="fas fa-user-tag text-danger"></i>{{user.username}} {{user.first_name}} {{user.last_name}} {{user.email}}</strong></p>
+                                
+                                
+                                <p class="mb-1"><strong>distance : {{distance}}</strong></p>
+                                
+                                
+                                <div class="col-md-6">
+                                    <p class="mb-1"><strong>Identifaint du paiement :</strong></p>
+                                    <h5 class="text-muted">{{ id_paiement }}</h5>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <p class="mb-1"><strong>
+                                        Depart : <i class="fas fa-map-marked-alt text-danger"></i> 
+                                        {{gare_depart}} Arrivée: <i class="fas fa-map-marker-alt text-danger"></i>
+                                        {{gare_arrivee}}</strong>
+                                    </p>
+                                    
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <p class="mb-1"><strong>Calcule du montant total : </strong></p>
+                                <p class="text-muted"><strong>Montant Total Adulte : (place adulte * prix uniatire) {{ nbr_adulte_int }}*{{prix_unitaire}} = {{mont_adulte}}</strong></p>
+                                {% if nbr_enfant_int > 0 %}
+                                    <p class="text-muted"><strong>Montant Total Enfant : (place enfant * prix uniatire) {{ nbr_enfant_int }}*{{prix_unitaire}} = {{mont_enfant}} </strong></p>
+                                    <p>Les enfant des 6 à 10 paient 75% de du prix unitaire c'est qui fais {{mont_enfant}} * 0.75  = {{reduction}}</p>
+
+                                {% endif %}
+                                <p class="mb-1 text-danger"><strong>Montant Total : {{ montant_paiement }} F CFA</strong></p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+            <form action="{% url 'reservation_paiement:confirmation_reservation_paiement' id_paiement %}" method="POST" class="reservation-form p-5 rounded-3 shadow-lg">
+                {% csrf_token %}
+                <h3 class="mb-1 text-center">Confirmer le paiement de votre réservation <span>- etape : 2</span></h3>
+                <h5 class="mb-4 text-center">{{message}}</h5>
+            
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <label for="id_mode_paiement" class="form-label">Mode paiement<span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-wallet"></i></span>
+                            <select class="form-select" id="id_mode_paiement" name="id_mode_paiement" required>
+                                <option value="" selected>Sélectionner votre point de depart</option>
+                                {% for mode_paiement in mode_paiements %}
+                                    <option  value="{{mode_paiement.id}}" selected>{{mode_paiement.libelle_mode}}</option>
+                                {% empty %}
+                                    <p>pas des mode paiement trouvées</p>
+                                {% endfor %}
+                            
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <label for="montant_paiement" class="form-label">Montant paiement<span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-map-marked-alt"></i></span>
+                            <input type="text" class="form-control" readonly id="montant_paiement" name="montant_paiement" placeholder="{{montant_paiement}}" value="{{montant_paiement}}">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="id_paiement" class="form-label">id paiement<span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-map-marked-alt"></i></span>
+                            <input type="text" class="form-control" readonly id="id_paiement" name="id_paiement" placeholder="{{id_paiement}}" value="{{id_paiement}}">
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-4 mt-3"> 
+                    <div class="col-md-6">
+                        <label for="numero_paiement" class="form-label">Numéro de Téléphone Paiement  <span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-mobile-alt"></i></span>
+                            <input type="tel" class="form-control" id="numero_paiement" name="numero_paiement" placeholder="Ex: 081xxxxxxx">
+                        </div>
+                    </div>
+                
+                    <div class="col-md-6">
+                        <label for="mode_paiement" class="form-label">Opérateur money<span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-wallet"></i></span>
+                            <select class="form-select" id="mode_paiement" name="mode_paiement">
+                                <option value="" selected>Sélectionner le mode de paiement</option>
+                                <option value="orange_money">Orange Money</option>
+                                <option value="m_pesa">M-Pesa</option>
+                                <option value="afrimoney">Afrimoney</option>
+                                <option value="airtel_money">Airtel Money</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-grid mt-5">
+                    <button type="submit" class="btn btn-lg btn-danger fw-bold">
+                        <i class="fas fa-check-circle me-2"></i> Payer
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        {% if erreur %}
+
+            
+            <div class="alert alert-danger" role="alert">
+                <h4 class="alert-heading">Erreur(s) détectée(s) :</h4>
+
+                <p class="mb-0">
+                    <strong>{{erreur}}</strong>
+                </p>
+            
+
+            </div>
+
+
+        {% endif %}
+    {% else %}
+                    
+
+        <div class="alert alert-danger" role="alert">
+            <h4 class="alert-heading">Erreur(s) détectée(s) :</h4>
+            
+            <p class="mb-0">
+                <strong>veuillez réaliser un paiement pour pouvoir le confirmer</strong>
+            </p>
+        
+                
+        </div>
+    {% endif %}
+{% endblock %}
+           

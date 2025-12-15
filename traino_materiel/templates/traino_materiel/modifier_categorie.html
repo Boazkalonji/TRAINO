@@ -1,0 +1,100 @@
+{% extends 'front/header/header.html' %}
+{% load static %}
+
+
+    {% block extra_css %}
+        <link rel="stylesheet" href="{% static 'css/traino_materiel/categorie.css' %}">
+
+
+    {% endblock %}
+
+    
+
+{% block containter%}
+
+
+
+    
+    <div class="container content-wrapper-light pt-5">
+        
+        <form action="{% url 'traino_materiel:modifier_categorie' categorie.id categorie.slug  %}" method="post" class="creation-form p-5 rounded-3 shadow-lg">
+            {% csrf_token %}
+            <h3 class="mb-4 text-center text-secondary">Définir une Nouvelle Catégorie de Tarif</h3>
+        
+            <div class="row g-4 justify-content-center">
+                
+            
+                <div class="col-md-6">
+                    <label for="designation_categorie" class="form-label">Libellé Catégorie <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-tag"></i></span>
+                        <input type="text" 
+                                class="form-control" 
+                                id="designation_categorie" 
+                                name="designation_categorie" 
+                                placeholder="Ex: 1ère Classe (Voyageurs)" 
+                                value="{{categorie.designation_categorie}}"
+                                required>
+                    </div>
+                </div>
+            
+                <div class="col-12">
+                    <label for="tarif" class="form-label">Tarification<span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
+                        <input type="number"
+                                class="form-control" 
+                                id="tarif" name="tarif" 
+                                value="{{categorie.tarif}}"
+                                placeholder="Ex: 50.00" required>
+                        <span class="input-group-text">CDF</span>
+                    </div>
+                </div>
+                
+            </div>
+        
+            <div class="d-grid mt-5">
+                <button type="submit" class="btn btn-lg btn-danger fw-bold">
+                    <i class="fas fa-sitemap me-2"></i> VALIDER
+                </button>
+            </div>
+            
+        </form>
+
+        {% comment %}
+            Bloc pour afficher les erreurs au momemnt du traitement du formaulire soumit
+        {% endcomment %}
+
+        {% if erreur %}
+            <div class="alert alert-danger mt-3" role="alert">
+                <h4 class="alert-heading">Erreur(s) détectée(s) :</h4>
+                {% for cle, message in erreur.items %}
+    
+                    <p class="mb-0">
+                        <strong>{{ message }} </strong>
+                    </p>
+
+                {% endfor %}
+                    
+            </div>
+        {% endif %}
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

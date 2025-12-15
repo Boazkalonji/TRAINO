@@ -1,0 +1,198 @@
+{% extends 'front/header/header.html' %}
+{% load static %}
+
+
+    {% block extra_css %}
+        <link rel="stylesheet" href="{% static 'css/publication_avis/publication_avis.css' %}">
+
+
+    {% endblock %}
+
+    
+
+{% block containter%}
+
+
+
+
+
+
+
+
+
+    
+    {% if publication_avis %}
+
+        <div class="container my-5">
+
+            <div class="document-container p-5 bg-white shadow-lg border">
+
+                <div class="header-section row mb-4 align-items-center">
+                    <div class="col-3 text-start">
+                        <div class="logo-placeholder">
+                            <img src="{% static 'img/onatra.png' %}" alt="Logo ONATRA" class="img-fluid" style="max-height: 80px;">
+                        </div>
+                    </div>
+                    <div class="col-9 text-end small">
+                        <p class="mb-0">Kinshasa, le {{publication_avis.date_avis}}</p>
+                    </div>
+                    <div class="col-12 text-start mt-2">
+                        <p class="mb-0 fw-bold">OFFICE NATIONAL DES TRANSPORTS</p>
+                        <p class="mb-0 fw-bold">ONATRA s.a.</p>
+                        <p class="mb-0 fst-italic">Direction Générale</p>
+                    </div>
+                </div>
+
+                <hr class="my-4">
+
+                <div class="title-section text-center mb-5">
+                    <h5 class="fw-bold mb-1">AVIS AU PUBLIC N° {{publication_avis.reference_avis | upper}}</h5>
+                    <h4 class="fw-bolder text-uppercase">{{publication_avis.titre_avis | upper}}</h4>
+                </div>
+
+                <div class="body-section mb-5">
+                    <p style="text-indent: 50px;">
+                        {{ publication_avis.message_avis |truncatechars:100 }}
+                    </p>
+                </div>
+
+                <div class="table-responsive mb-5">
+                    <table class="table table-bordered tariff-table">
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col" style="width: 40%;">Personnes exemptées selon les cas.</th>
+                                <th scope="col" colspan="2" class="text-center">Tarification</th>
+                            </tr>
+                            <tr>
+                                <th scope="col">Consigne</th>
+                                <th scope="col" class="text-center">1ère classe</th>
+                                <th scope="col" class="text-center">Classe de luxe</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Les enfants de 0 à 5 ans</td>
+                                <td class="text-center fw-bold text-success">Gratuit</td>
+                                <td class="text-center fw-bold text-success">Gratuit</td>
+                            </tr>
+                            <tr>
+                                <td>Les enfants de 6 à 10 ans</td>
+                                <td class="text-center">75% $US/passager</td>
+                                <td class="text-center">75% $US/passager</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+                <div class="table-responsive mb-5">
+                    <table class="table table-bordered tariff-table">
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col" colspan="3" class="text-center">Tarification</th>
+                            </tr>
+                            <tr>
+                                <th scope="col" class="text-center">1ère classe</th>
+                                <th scope="col" class="text-center">Classe de luxe</th>
+                                <th scope="col" class="text-center">Classe Premium</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% comment %} 
+                            La boucle de tarification doit être faite ici. 
+                            Étant donné que l'image ne montre qu'une seule ligne, nous allons supposer 
+                            que 'tarification_max' est une liste/queryset de 3 objets 
+                            ou que vous avez 3 variables distinctes passées au template.
+                            {% endcomment %}
+                        </tbody>
+                    </table>
+                </div>
+                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <div class="body-section mb-5">
+                    <p style="text-indent: 50px;">
+                        {{publication_avis.consigne_avis|truncatechars:100 }}
+                    </p>
+                </div>
+
+                <div class="footer-section text-end mt-5">
+                    <p class="mb-0">Fait à Kinshasa, le {{publication_avis.date_avis}}</p>
+                    <p class="mb-0 fw-bold mt-4">LE DIRECTEUR GENERAL</p>
+
+                </div>
+
+                <div class="legal-info small mt-5 pt-3 border-top text-center text-muted">
+                     <p class="mb-0">Société Anonyme Unipersonnelle - capital social : 1.464.432.500.000 FC</p>
+                     <p class="mb-0">N°R.C.C.M. CD/KIN/RCCM/14-B-3292-N° ID NAT.01-71-N60911K N°Impôt: AO 700220Y</p>
+                     <p class="mb-0">177, Blvd du 30 juin - Kinshasa/Gombe - Email: onatrakin@gmail.com - www.onatra-cd.com</p>
+                </div>
+
+            </div>
+
+            <div class="text-center mt-4">
+                <a href="{% url 'publication_avis:telecharger_dernier_publication_avis' %}" download class="btn btn-danger btn-lg fw-bold shadow-sm">
+                    <i class="fas fa-file-download me-2"></i> Télécharger l'Avis N°32
+                </a>
+            </div>
+
+        </div>
+
+    
+    
+    {% else %}
+        <div class="container text-center py-5">
+            <div class="row">
+                <div class="col-12">
+                    
+                    <i class="fa-solid fa-cloud-moon-rain fa-3x mb-3 text-secondary"></i>
+                    
+                    <h1 class="display-5 fw-bold">{{ message_publication_vide }}</h1>
+                    <p class="lead text-muted">Veuillez revenir plus tard, de nouvelles publications arriveront bientôt.</p>
+                </div>
+            </div>
+            
+            <hr class="my-5"> 
+
+            <div class="row">
+                <div class="col-12">
+                    <h3>Statut des Tarifs Actuels :</h3>
+                    {% for tarif in tarification_max %}
+                        <span class="badge bg-info text-dark me-2">{{ tarif.designation_tarififcation }}: {{ tarif.pu_le_plus_eleve }} €</span>
+                    {% empty %}
+                        <p>Aucun tarif disponible.</p>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+
+    {% endif %}
+
+    
+
+
+
+
+
+
+
+
+{% endblock %}

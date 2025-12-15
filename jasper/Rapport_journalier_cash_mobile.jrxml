@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_A4" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="912a63a6-8899-48ed-bbf7-3c9976b42d28">
+	<property name="com.jaspersoft.studio.data.sql.tables">
+		<![CDATA[YXV0aF91c2VyICwxNSwyNjcsNGVhNzQxYTYtZTY1Zi00YzE2LTgyNjAtMGY4NzQ5MTRlNGRlO2dh
+cmVfZ2FyZSBBUyAsMjA5LDE1LDgwYTgxNDZiLTRjOGUtNGE3Yy04MzlmLTJjNmE0ZjQ5YThkMztn
+YXJlX2dhcmUgQVMgLDE1LDk5LDI1MjJkYTEzLTllZjEtNDRkMS05MDU4LTk1Njg0MGY3MDRmOTty
+ZXNlcnZhdGlvbl9wYWllbWVudF9tb2RlX3BhaWVtZW50ICw0MDgsMTIxLGY2ZjA3MTU4LWUyMGIt
+NDExYy04NjU3LTY3ZTZjNjAxMjFmZTt0YXJpZmljYXRpb25fdGFyaWZpY2F0aW9uICw0MDgsMjM3
+LDQ2OWQxODc2LTc4OGYtNDRhOC05YmNhLWNjM2RkZTBkYWE3ODtyZXNlcnZhdGlvbl9wYWllbWVu
+dF9wYWllbWVudCAsNjUwLDE4Nyw1MWEyYTE2Yi0xZjMwLTQ5NDctOWRhMC0yYmJhMzE2Zjc5NjI7
+ZGV0YWlsc192b3lhZ2VfZGV0YWlsc192b3lhZ2UgLDIwOSwxODMsZjNiYjhmNmItZjFiMy00Yjhj
+LWI0ZWEtYTQ5OTY2NmEyOWY0Ow==]]>
+	</property>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="391"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="609"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Rapport_journalier_cash_mobile"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT reservation_paiement_paiement.date_paiement,
+	reservation_paiement_paiement.nombre_place_reserve,
+	reservation_paiement_paiement.montant_paiement,
+	gare_gare_depart.libelle_gare AS gare_depart,
+	gare_gare_arrive.libelle_gare AS gare_arrivée,
+	tarification_tarification.designation_tarififcation,
+	reservation_paiement_mode_paiement.libelle_mode,
+	auth_user.username
+FROM reservation_paiement_paiement
+	INNER JOIN reservation_paiement_mode_paiement ON 
+	 reservation_paiement_mode_paiement.id = reservation_paiement_paiement.id_mode_paiement_id 
+	INNER JOIN tarification_tarification ON 
+	 tarification_tarification.id = reservation_paiement_paiement.id_tarification_id 
+	INNER JOIN details_voyage_details_voyage ON 
+	 details_voyage_details_voyage.id = tarification_tarification.id_details_voyage_id 
+	INNER JOIN gare_gare AS gare_gare_depart ON 
+	 gare_gare_depart.id = details_voyage_details_voyage.id_gare_depart_id 
+	INNER JOIN gare_gare AS gare_gare_arrive ON 
+	 gare_gare_arrive.id = details_voyage_details_voyage.id_gare_arrive_id 
+	INNER JOIN auth_user ON 
+	 auth_user.id = reservation_paiement_paiement.id_user_id]]>
+	</queryString>
+	<field name="date_paiement" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="date_paiement"/>
+		<property name="com.jaspersoft.studio.field.label" value="date_paiement"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="reservation_paiement_paiement"/>
+	</field>
+	<field name="nombre_place_reserve" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="nombre_place_reserve"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombre_place_reserve"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="reservation_paiement_paiement"/>
+	</field>
+	<field name="montant_paiement" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="montant_paiement"/>
+		<property name="com.jaspersoft.studio.field.label" value="montant_paiement"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="reservation_paiement_paiement"/>
+	</field>
+	<field name="gare_depart" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="gare_depart"/>
+		<property name="com.jaspersoft.studio.field.label" value="gare_depart"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="gare_gare"/>
+	</field>
+	<field name="gare_arrivée" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="gare_arrivée"/>
+		<property name="com.jaspersoft.studio.field.label" value="gare_arrivée"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="gare_gare"/>
+	</field>
+	<field name="designation_tarififcation" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="designation_tarififcation"/>
+		<property name="com.jaspersoft.studio.field.label" value="designation_tarififcation"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tarification_tarification"/>
+	</field>
+	<field name="libelle_mode" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="libelle_mode"/>
+		<property name="com.jaspersoft.studio.field.label" value="libelle_mode"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="reservation_paiement_mode_paiement"/>
+	</field>
+	<field name="username" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="username"/>
+		<property name="com.jaspersoft.studio.field.label" value="username"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="auth_user"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,26 @@
+/* Styles personnalisés pour un look plus moderne */
+        .dashboard-container {
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+            background-color: #f4f7f6; /* Arrière-plan légèrement gris */
+        }
+        .stat-card {
+            transition: all 0.3s ease;
+            border-left: 5px solid #dc3545; /* Bordure latérale pour accent */
+            border-radius: 0.5rem;
+        }
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+        }
+        .side-panel {
+            background-color: #ffffff;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            height: 100%; /* S'assurer qu'il prend toute la hauteur disponible */
+        }
+        .table-card {
+            border-radius: 0.5rem;
+            overflow: hidden; /* Important pour les coins arrondis du tableau */
+        }

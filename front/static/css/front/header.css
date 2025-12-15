@@ -1,0 +1,17 @@
+/* Définition des couleurs observées pour plus de clarté */
+:root {
+    /* Couleurs de la Bannière (Purple/Bleu foncé) */
+    --purple-main: #3a1c71; 
+    --purple-light: #6a329c; 
+    
+    /* Couleurs des blocs de statistiques sur la capture (Vert, Violet, Bleu clair, Teal) */
+    --stat-color-1: #5cb85c; /* Vert (Documents) */
+    --stat-color-2: #800080; /* Violet (Universités) */
+    --stat-color-3: #5bc0de; /* Bleu clair (Utilisateurs) */
+    --stat-color-4: #4ecdc4; /* Cyan/Teal (Téléchargements) */
+    
+    --stat-block-bg-default: rgba(255, 255, 255, 0.05); /* Fond très transparent pour le bloc stat */
+    --book-placeholder-bg: rgba(255, 255, 255, 0.15); /* Fond pour le bloc livre */
+}
+
+

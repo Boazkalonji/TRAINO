@@ -1,0 +1,69 @@
+/* ------------------------------------------- */
+/* Styles pour l'effet de Survol sur l'Image  */
+/* ------------------------------------------- */
+
+/* 1. Conteneur principal pour positionner les éléments */
+.image-container {
+    position: relative; /* Clé pour positionner l'overlay */
+    height: 100%;
+    overflow: hidden; /* Assure que les coins arrondis de l'image sont respectés */
+}
+
+/* 2. L'image elle-même (pour assurer un remplissage et une transition fluide) */
+.image-container img {
+    display: block;
+    width: 100%;
+    transition: transform 0.5s ease-in-out; /* Animation douce au zoom */
+}
+
+/* 3. La superposition (Overlay) par défaut (cachée et transparente) */
+.image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0); /* Début transparent */
+    color: white;
+    opacity: 0; /* Caché par défaut */
+    transition: opacity 0.5s ease, background 0.5s ease;
+    
+    /* Centrage du texte */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+}
+
+/* 4. Effet au survol (HOVER) */
+.image-container:hover .image-overlay {
+    /* Ajout du dégradé et augmentation de l'opacité */
+    background: linear-gradient(to bottom, rgba(247, 69, 69, 0.4), rgba(8, 1, 96, 0.6));
+    opacity: 1; /* Rendu visible */
+    cursor: pointer;
+}
+
+/* 5. Effet de zoom léger sur l'image au survol (Optionnel, pour un meilleur dynamisme) */
+.image-container:hover img {
+    transform: scale(1.05); /* Zoom léger de 5% */
+}
+
+/* 6. Styles du texte de la superposition */
+.overlay-text {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+    /* Transition pour une apparition plus douce du texte */
+    transform: translateY(20px);
+    transition: transform 0.6s ease-out 0.2s;
+}
+.image-container:hover .overlay-text {
+    transform: translateY(0);
+}
+
+.overlay-subtext {
+    font-size: 1rem;
+    opacity: 0.8;
+}

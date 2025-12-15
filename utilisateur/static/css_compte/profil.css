@@ -1,0 +1,78 @@
+/* Styles pour le Thème Général (si non déjà inclus) */
+:root {
+    --danger-color: #dc3545;     /* Rouge ONATRA */
+}
+
+/* 👤 Section Profil */
+
+/* Avatar Rond (Conteneur) */
+.avatar-circle {
+    width: 100px;
+    height: 100px;
+    background-color: var(--danger-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Styles conservés de la version précédente */
+    box-shadow: 0 0 0 4px rgba(220, 53, 69, 0.3); 
+}
+
+/* NOUVEAU STYLE POUR LES INITIALES */
+.profile-initials {
+    /* Taille de police pour les initiales */
+    font-size: 2.5rem; /* Rendre les initiales très grandes */
+    font-weight: bold;
+    color: white;
+    /* Assure que le texte est centré verticalement et horizontalement */
+    line-height: 1; 
+    text-transform: uppercase;
+}
+
+/* ... autres styles ... */
+
+/* Menu de Navigation du Compte */
+.account-menu .list-group-item {
+    border-left: 3px solid transparent;
+    transition: border-left 0.2s, background-color 0.2s;
+    font-size: 1rem;
+    color: var(--text-color);
+}
+
+.account-menu .list-group-item.active {
+    background-color: #fcebeb; /* Fond très léger rouge */
+    color: var(--danger-color);
+    border-left: 3px solid var(--danger-color); /* Barre d'accentuation */
+    font-weight: bold;
+    border-color: var(--border-color); 
+}
+
+/* ... autres styles pour les cartes ... */
+
+
+
+
+
+/* Assurez-vous que ce style est présent dans votre profil.css */
+
+.avatar-circle {
+    /* Dimensions et centrage du cercle */
+    width: 100px;
+    height: 100px;
+    background-color: #dc3545; /* La couleur rouge */
+    border-radius: 50%;
+    display: flex; /* Ceci est crucial pour centrer le texte */
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 0 4px rgba(220, 53, 69, 0.3); 
+}
+
+.profile-initials {
+    /* Styles du texte JK ou BO */
+    font-size: 2.5rem; /* Doit être grand */
+    font-weight: bold;
+    color: white;
+    /* Rendu des majuscules (utile si le filtre |upper n'est pas utilisé) */
+    text-transform: uppercase; 
+    line-height: 1; 
+}

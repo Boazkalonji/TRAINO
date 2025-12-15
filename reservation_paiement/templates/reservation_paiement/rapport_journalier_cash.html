@@ -1,0 +1,163 @@
+{% extends 'front/header/header.html' %}
+{% load static %}
+
+{% block containter%}
+  
+    <div class="container-fluid p-4 bg-light min-vh-100">
+        
+        <h2 class="mb-2 text-dark fw-light">
+            <i class="fas fa-file-invoice-dollar me-2 text-primary "></i> Rapport Journalier des Ventes CASH
+        </h2>
+        
+        <p class="text-muted lead border-bottom pb-3 mb-4">
+            Transactions enregistrées pour la date sélectionnée : <strong class="text-primary">{{ date_rapport|date:"d F Y" }}</strong>.
+        </p>
+
+        <div class="row mb-4 ">
+            <div class="col-12 ">
+                <form method="get" class=" d-flex align-items-center bg-white p-3 rounded shadow-sm border" action="{% url 'reservation_paiement:rapport_journalier_cash' %}">
+                    <label for="date-select" class="form-label mb-0 me-3 text-muted fw-bold small text-uppercase">
+                        Filtrer par Date:
+                    </label>
+                    
+                    <input type="date" 
+                           class="form-control form-control-sm me-2" 
+                           id="date-select" 
+                           name="filter_date" 
+                           style="max-width: 180px;"
+                           value="{{ filter_date_iso }}">
+                    <button type="submit" class="btn btn-sm btn-primary shadow-sm" title="Filtrer">
+                        <i class="fas fa-filter me-1"></i> Rechercher
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        
+        <div class="row g-4 ">
+            
+ 
+            <div class="col-lg-3 col-md-12 order-lg-1 ">
+                <div class="side-panel bg-white p-4 rounded shadow">
+                    <h5 class="mb-3 border-bottom pb-2 text-dark">
+                        <i class="fas fa-chart-line me-2 text-info"></i> Synthèse et Actions
+                    </h5>
+                    
+                    
+                    <div class="mb-4 p-3 rounded border" style="background-color: #f0f4f8;">
+                        <p class="text-muted fw-bold small text-uppercase mb-1">Guichetier(ou chef de gare)</p>
+                        <p class="h5 mb-0 fw-bold text-dark">{{ request.user.username|default:"N/A" }}</p>
+                    </div>
+
+               
+
+                    <p class="text-muted fw-bold small text-uppercase mt-4 border-top pt-3">Actions Rapides</p>
+                    <div class="d-grid gap-2">
+                       
+                        <a href="{% url 'front:index' %}" class="btn btn-primary btn-sm shadow-sm">
+                            <i class="fas fa-plus me-1"></i> RETOUR
+                        </a>
+
+                        <a href="{% url 'reservation_paiement:rapport_jour_cash' %}" class="btn btn-outline-warning btn-sm mt-2" type="button">
+                            <i class="fas fa-file-pdf me-1"></i> Exporter PDF
+                        </a>
+                        <a href="{% url 'publication_avis:dernier_publication_avis' %}" class="btn btn-outline-danger btn-sm" type="button">
+                            <i class="fas fa-user-friends me-1"></i> Voir Avis public
+                        </a>
+                    </div>
+                    
+                </div>
+            </div> 
+
+      
+            <div class="col-lg-9 col-md-12 order-lg-2">
+                
+          
+                {% if totaux.total_montant %}
+                <div class="row g-4 mb-4">
+                    <div class="col-md-6">
+                       
+                        <div class="card shadow-sm border-start border-4  h-100 rounded">
+                            <div class="card-body">
+                                <h5 class="card-title text-uppercase text-muted small">RECETTE GENERE</h5>
+                                <p class="h1 mb-0 fw-bold text-danger">{{ totaux.total_montant|default:"0.00" }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        
+                        <div class="card shadow-sm border-start border-4 h-100 rounded">
+                            <div class="card-body">
+                                <h5 class="card-title text-uppercase text-muted small">Total Places Vendues</h5>
+                                <p class="h1 mb-0 fw-bold text-primary">{{ totaux.total_places|default:"0" }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                
+                <div class="card shadow">
+                    
+                    <div class="card-header bg-danger text-white">
+                        <h5 class="mb-0">Détails des Transactions Cash ({{ ventes|length }} enregistrement{% if ventes|length > 1 %}s{% endif %})</h5>
+                    </div>
+
+            
+                    <div class="card table-card shadow-sm border-0">
+                        
+                        <div class="card-header bg-light border-0 py-3">
+                            <h5 class="mb-0 text-dark">
+                                 <i class="fas fa-history me-2 text-secondary"></i> Derniers Paiements & Réservations
+                            </h5>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover mb-0">
+                                    <thead class="bg-light">
+                                        <tr>
+                                            <th scope="col">Num Paiement.</th>
+                                            <th scope="col">Date paiement</th>
+                                            <th scope="col">Trajet</th>
+                                            <th scope="col">Designation tarification</th>
+                                            <th scope="col" class="text-center">Nombre de places</th>
+                                            <th scope="col">Montant</th>
+                                            <th scope="col">Mode paiement</th>
+                                            <th scope="col">Nom client</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for paiement in ventes %}
+                                            <tr>
+                                                <th scope="row">{{ paiement.id }}</th>
+                                                <td>{{ paiement.date_paiement}}</td>
+                                                <td>    
+                                                    <span class="fw-bold text-dark">{{ paiement.id_tarification.id_details_voyage.id_gare_depart.libelle_gare }}</span> 
+                                                    <i class="fas fa-arrow-right text-muted small mx-1"></i> 
+                                                    <span class="fw-bold text-dark">{{ paiement.id_tarification.id_details_voyage.id_gare_arrive.libelle_gare }}</span>
+                                                </td>
+                                                <td>{{ paiement.id_tarification.designation_tarififcation|default:"-" }}</td>
+                                                <td class="text-center">{{ paiement.nombre_place_reserve }}</td>
+                                                <td><span class="fw-bold text-success">{{ paiement.montant_paiement|default:"0.00" }}</span></td>
+                                                
+                                                <td><span class="badge bg-info text-dark">{{ paiement.id_mode_paiement.libelle_mode|default:"Inconnu" }}</span></td>
+                                                <td>{{ paiement.id_user.username|default:"Utilisateur Inconnu" }}</td>
+                                            </tr>
+                                        {% empty %}
+                                            <tr>
+                                                <td colspan="8" class="text-center text-muted py-4">Aucune vente en espèces validée pour la journée du {{ date_rapport|date:"d/m/Y" }}.</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div> 
+            </div> 
+        </div>
+        
+    </div>
+
+{% endblock %}

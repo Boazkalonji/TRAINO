@@ -1,0 +1,146 @@
+{% extends '../head.html' %}
+{% load static %}
+
+
+
+    <link rel="stylesheet" href="{% static 'css_compte/modifier_compte.css' %}">
+
+
+
+    
+{% block containter%}
+
+
+        <div>
+
+            <div class="container card p-4 custom-stepper-form custom-centered-form" style="margin-top: 80px;">
+
+            <h3>MODIFICATION</h3>
+            <form action="{% url 'utilisateur:modifier_compte' user.id %}" method="post">
+
+                {% csrf_token %}
+            
+                <label class="mb-1">Nom</label>
+                <div class="input-group mb-2">
+                    <span class="input-group-text"><i class="bi bi-person"></i></span>
+                    <input type="text" 
+                            name="nom" 
+                            class="form-control" 
+                            value="{{ user.username }}" 
+                            id="nom"
+                    >
+
+                    {% if erreur.username %}
+                        <div class="invalid-feedback">
+                            {{ erreur.nom }}
+                        </div>
+                    {% endif %}
+                </div>
+            
+            
+                <label class="mb-1">Postnom</label>
+                <div class="input-group mb-2">
+                    <span class="input-group-text"><i class="bi bi-person-badge"></i></span>
+                    <input type="text" name="postnom" 
+                            class="form-control" 
+                            value="{{ user.last_name }}"  
+                            id="postnom"
+                    >
+
+                    {% if erreur.last_name %}
+                        <div class="invalid-feedback">
+                            {{ erreur.postnom }}
+                        </div>
+                    {% endif %}
+                </div>
+            
+            
+                <label class="mb-1">Prenom</label>
+                <div class="input-group mb-2">
+                    <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+                    <input type="text" 
+                            name="prenom" 
+                            class="form-control" 
+                            value="{{ user.first_name }}" 
+                            id="prenom">
+                    
+
+                    {% if erreur.first_name %}
+                        <div class="invalid-feedback">
+                            {{ erreur.prenom }}
+                        </div>
+                    {% endif %}
+                </div>
+            
+            
+                <label class="mb-1">Email</label>
+                <div class="input-group mb-2">
+                    <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                    <input  type="email" 
+                            name="email" 
+                            class="form-control" 
+                            value="{{ user.email }}" 
+                            id="email">
+                    {% if erreur.email %}
+                        <div class="invalid-feedback">
+                            {{ erreur.email }}
+                        </div>
+                    {% endif %}
+                </div>
+            
+            
+                <label class="mb-4">Mot de passe</label>
+                <div class="input-group mb-2">
+                    <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                    <input  type="password" 
+                            name="password" 
+                            class="form-control" 
+                            placeholder="laissez vide pour n'est pas modifier le mot de passe"
+                            id="password" maxlength="20">
+                    
+                    {% if erreur.password %}
+                        <div class="invalid-feedback">
+                            {{ erreur.password }}
+                        </div>
+                    {% endif %}
+                </div>
+            
+                <button type="submit" class="btn btn-danger">Modifier</button>
+            
+            </form>
+
+
+
+            {% comment %}
+                    Bloc pour afficher les erreurs au momemnt du traitement du formaulire soumit
+                {% endcomment %}
+
+                {% if erreur %}
+                    <div class="alert alert-danger" role="alert">
+                        <h4 class="alert-heading">Erreur(s) détectée(s) :</h4>
+
+                        {% for cle, message in erreur.items %}
+                            {% if cle == 'email' or cle == 'general' or cle == 'email_non_valide' %}
+                                <p class="mb-0">
+                                    <strong>{{ message }} </strong>
+                                </p>
+                            {% endif %}
+                        {% endfor %}
+
+
+                        {% for message in erreur %}
+                            
+                            <p class="mb-0">
+                                <strong>{{ message }} </strong>
+                            </p>
+                            
+                        {% endfor %}
+
+                            
+                    </div>
+                {% endif %}
+        </div>
+    </div>
+
+
+{% endblock %}

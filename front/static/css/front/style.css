@@ -1,0 +1,361 @@
+body{
+    background-color: #F4F4F9;
+}
+
+/* Définition des couleurs observées pour plus de clarté */
+:root {
+    /* Couleurs de la Bannière (Purple/Bleu foncé) */
+    --purple-main: #3a1c71; 
+    --purple-light: #6a329c; 
+    
+    /* Couleurs des blocs de statistiques sur la capture (Vert, Violet, Bleu clair, Teal) */
+    --stat-color-1: #5cb85c; /* Vert (Documents) */
+    --stat-color-2: #800080; /* Violet (Universités) */
+    --stat-color-3: #5bc0de; /* Bleu clair (Utilisateurs) */
+    --stat-color-4: #4ecdc4; /* Cyan/Teal (Téléchargements) */
+    
+    --stat-block-bg-default: rgba(255, 255, 255, 0.05); /* Fond très transparent pour le bloc stat */
+    --book-placeholder-bg: rgba(255, 255, 255, 0.15); /* Fond pour le bloc livre */
+}
+
+/* 🖼️ Bannière/Héro Section Style */
+.hero-section {
+    /* 1. Hauteur : Fixé à 40vh, plus la hauteur du padding */
+    min-height: 40vh; 
+    height: auto; /* Permet au contenu de s'étendre si nécessaire */
+    padding: 30px 0; /* Réduit le padding pour se rapprocher de 40vh */
+    
+    /* 2. Affichage du Background-Image et Gradient */
+    /* On utilise l'image en premier plan (url) et le dégradé en overlay (premier) */
+    background-image: 
+        linear-gradient(to right, rgba(58, 28, 113, 0.8), rgba(137, 33, 107, 0.8)), /* Overlay foncé pour lisibilité */
+        url('../../img/99.jpg'); /* Le chemin de votre image avec la balise Django */
+
+    background-color: var(--purple-main);
+    background-size: cover; /* Assure que l'image couvre l'espace */
+    background-repeat: no-repeat;
+    background-position: center; 
+    position: relative;
+    
+    /* Assurez-vous que le texte reste blanc */
+    color: white !important;
+}
+
+/* Styles pour les blocs de statistiques */
+.stat-block {
+    background-color: var(--stat-block-bg-default);
+    padding: 10px;
+    border-radius: 8px; /* Coins du bloc */
+    margin-bottom: 15px;
+    /* Retiré backdrop-filter pour simplifier et améliorer la performance */
+    border: none; /* Retiré la bordure pour un look plus "soft" */
+    
+    /* Assurez-vous que tout le contenu est aligné au centre */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Styles des cercles de couleurs (Nouveau - utilise l'HTML ci-dessous) */
+.icon-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%; /* Rendre le bloc circulaire */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 5px; /* Espace entre le cercle et le numéro */
+}
+
+/* Application des couleurs spécifiques à chaque cercle/icone */
+.icon-circle.green { background-color: var(--stat-color-1); }
+.icon-circle.violet { background-color: var(--stat-color-2); }
+.icon-circle.blue { background-color: var(--stat-color-3); }
+.icon-circle.teal { background-color: var(--stat-color-4); }
+
+.icon-circle i {
+    color: white; /* Les icônes restent blanches à l'intérieur du cercle */
+    font-size: 1rem;
+}
+
+.stat-number {
+    font-size: 1.2rem; /* Légèrement plus petit pour l'espace */
+    font-weight: bold;
+    margin-bottom: 0.2rem;
+}
+
+.stat-label {
+    font-size: 0.7rem;
+    opacity: 0.9;
+    margin: 0;
+}
+
+/* Style pour le bloc du livre à droite */
+.book-placeholder {
+    width: 200px; /* Réduit légèrement la taille */
+    height: 150px;
+    background-color: var(--book-placeholder-bg);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.book-placeholder i {
+    color: white;
+    opacity: 0.8;
+}
+
+.spinner-grow {
+    background-color: white; /* Pour que les points soient blancs */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.header-section {
+    padding: 30px 0;
+    text-align: center;
+}
+.search-bar-container {
+    max-width: 600px; /* Largeur réduite pour le conteneur */
+    margin: 0 auto 50px auto;
+    background-color: #fff; /* Le conteneur reste blanc */
+    border-radius: 50px; /* Arrondi du conteneur */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    padding: 5px; /* Réduit le padding du conteneur pour rapprocher l'input des bords */
+    display: flex;
+    align-items: center;
+    z-index: 100; /* z-index élevé pour le conteneur de recherche */
+    position: relative; /* Nécessaire pour que z-index fonctionne */
+}
+.search-input {
+    /* Styles spécifiques à l'input */
+    flex-grow: 1;
+    padding: 15px 25px; /* Plus de padding vertical pour une hauteur plus grande */
+    font-size: 1.1rem; /* Texte un peu plus grand */
+    color: #fff; /* Couleur du texte blanc */
+    background-color: #000; /* Fond noir */
+    border: none; /* Pas de bordure par défaut */
+    border-radius: 50px; /* Bords très arrondis pour l'input lui-même */
+    outline: none; /* Supprime le contour de focus */
+    box-shadow: none; /* Supprime l'ombre de focus de Bootstrap */
+    height: 60px; /* Hauteur fixe pour l'input */
+    width: calc(100% - 60px); /* Pour que l'input prenne presque toute la largeur du conteneur, laissant de la place pour le bouton */
+    margin-right: 5px; /* Petit espace entre l'input et le bouton */
+}
+.search-input::placeholder {
+    color: rgba(255, 255, 255, 0.7); /* Couleur du placeholder en blanc légèrement transparent */
+}
+.search-input:focus {
+    outline: none;
+    box-shadow: none;
+    border-color: transparent; /* S'assurer qu'il n'y a pas de bordure au focus */
+}
+.search-btn {
+    background-color: #00878a; /* Couleur verte/bleue de SNCF */
+    border: none;
+    border-radius: 50%;
+    width: 50px; /* Plus large pour correspondre à la hauteur de l'input */
+    height: 50px; /* Plus haut */
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+    flex-shrink: 0; /* Empêche le bouton de rétrécir */
+}
+.search-btn:hover {
+    background-color: #005a5c;
+}
+/* Styles pour les Cartes */
+.card {
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.2s;
+    height: 100%; /* S'assurer que toutes les cartes ont la même hauteur dans la colonne */
+}
+.card-img-top {
+    width: 100%;
+    height: 200px; /* Hauteur fixe pour les images */
+    object-fit: cover;
+}
+.card-body {
+    padding: 20px;
+}
+.card-title {
+    font-weight: bold;
+    font-size: 1.15rem;
+    min-height: 50px; /* Assurer l'alignement du contenu sous le titre */
+}
+.card-text {
+    color: #555;
+    font-size: 0.95rem;
+    min-height: 80px; /* Assurer l'alignement du bouton sous le texte */
+}
+.btn-card-action {
+    color: #00878a;
+    font-weight: bold;
+    text-decoration: none;
+    padding-right: 20px;
+    position: relative;
+    display: inline-block;
+}
+.btn-card-action:hover {
+    color: #005a5c;
+}
+.btn-card-action .fa-arrow-right {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.8rem;
+}
+/* Étiquette Promo */
+.promo-tag {
+    background-color: #ff9900; /* Couleur jaune/orange visible */
+    color: white;
+    padding: 4px 10px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    border-radius: 5px;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    z-index: 10;
+}
+
+
+
+
+/* --- Section d'Options/Promotions --- */
+.custom-card {
+    background-color: #ffffff;
+    /* Un grand bloc rectangulaire, légèrement ombragé */
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
+    padding: 30px !important;
+    max-width: 900px; /* Pour centrer le bloc principal */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.custom-phone-img {
+    /* S'assurer que l'image du téléphone ne prend pas toute la colonne */
+    max-height: 400px; 
+    width: auto;
+}
+
+/* Style des liens d'action ("Je découvre", "C'est parti") */
+.custom-card a {
+    color: #333333; /* Couleur de texte sombre */
+    font-size: 1.1rem;
+}
+
+.custom-card a:hover {
+    color: #cc0000; /* Mettre en évidence au survol (couleur SNCF) */
+}
+
+/* Media Query pour un meilleur affichage sur mobile */
+@media (max-width: 768px) {
+    .custom-card .col-md-6:first-child {
+        margin-bottom: 20px; /* Espace sous l'image sur les petits écrans */
+    }
+    .custom-search-bar .form-control,
+    .custom-search-bar .custom-search-btn {
+        height: 50px; /* Hauteur réduite pour mobile */
+    }
+}
+
+
+
+
+
+
+
+
+
+/* --- Section d'Idées (Cartes) --- */
+.ideas-section {
+    padding-top: 20px !important;
+}
+.ideas-section h2 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 30px;
+}
+.card-idea {
+    border: none;
+    border-radius: 8px;
+    overflow: hidden; /* Les images respectent l'arrondi supérieur */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+    height: 100%; /* S'assurer que les cartes ont la même hauteur */
+}
+
+.card-idea:hover {
+    transform: translateY(-2px);
+}
+.card-img-custom {
+    height: 200px; /* Hauteur fixe pour l'image */
+    object-fit: cover; /* Assure que l'image couvre sans être déformée */
+}
+.card-body {
+    padding: 15px 20px;
+}
+.card-title {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.3;
+    color: #333;
+    margin-bottom: 8px;
+}
+.card-text {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.5;
+}
+
+
+
+
+
+
+
+
+/* Classe pour une très grande marge inférieure (margin bottom) */
+.mb-huge {
+    margin-bottom: 5rem !important; /* Ajustez cette valeur (ex: 4rem, 6rem) selon l'espace désiré */
+}
+
+/* Vous devez également conserver le CSS précédent pour que votre conteneur fonctionne */
+.container-80 {
+    width: 80%;
+    margin-left: auto; 
+    margin-right: auto;
+    padding-left: 1.5rem; 
+    padding-right: 1.5rem;
+}
+
+@media (max-width: 576px) {
+    .container-80 {
+        width: 100%;
+    }
+}
+

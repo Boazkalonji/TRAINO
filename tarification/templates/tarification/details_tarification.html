@@ -1,0 +1,112 @@
+{% extends 'front/header/header.html' %}
+{% load static %}
+
+
+{% block extra_css %}
+
+    <link rel="stylesheet" href="{% static 'css/tarification/detail_tarification.css' %}">
+{% endblock %}
+
+
+{% block containter%}
+
+
+
+
+    
+    <div class="container content-wrapper-light pt-5">
+        
+        <div class="card shadow-lg p-4 mb-4">
+            <h3 class="mb-4 text-center text-primary border-bottom pb-2">
+                Détails de la Tarification du Trajet
+            </h3>
+        
+            <div class="row">
+            
+                <div class="col-md-6 mb-4">
+                    <div class="card border-danger shadow-sm h-100">
+                        <div class="card-header bg-danger text-white">
+                            <i class="fas fa-route me-2"></i> Informations sur le Trajet
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <strong>ID du Trajet:</strong>
+                                <span class="badge bg-primary rounded-pill">{{ details_voyage.id }}</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <strong>Gare de Départ (Ville/Nom):</strong>
+                                <span>
+                                    {{ details_voyage.id_gare_depart.ville_gare }} ({{ details_voyage.id_gare_depart.libelle_gare }})
+                                </span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <strong>Gare d'Arrivée (Ville/Nom):</strong>
+                                <span>
+                                    {{ details_voyage.id_gare_arrive.ville_gare }} ({{ details_voyage.id_gare_arrive.libelle_gare }})
+                                </span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <strong>Distance Totale:</strong>
+                                <span class="text-danger fw-bold">{{ details_voyage.distance }} Km</span>
+                            </li>
+                        </ul>
+                        <div class="card-footer bg-light border-top text-end">
+                            <small class="text-muted">Slug: {{ details_voyage.slug }}</small>
+                        </div>
+                    </div>
+                </div>
+            
+                
+                <div class="col-md-6 mb-4">
+                    <div class="card border-success shadow-sm h-100">
+                        <div class="card-header bg-success text-white">
+                            <i class="fas fa-money-bill-wave me-2"></i> Tarifs Unitaires par Classe
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            
+                            {% for classe, prix in tarifs.items %}
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <strong>Prix {{ classe }}:</strong>
+                                
+                                    <span class="text-success fw-bold h5 mb-0">{{ prix}} CDF</span>
+                                </li>
+                            {% empty %}
+                                <li class="list-group-item text-center text-muted">
+                                    Aucune tarification n'est définie pour ce trajet.
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+        
+            <div class="mt-4 d-flex justify-content-between">
+                <a href="{% url 'tarification:lire_tarification' %}" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left me-2"></i> Retour à la Liste
+                </a>
+                {# Le lien de modification utilise les données 'details_voyage' du contexte #}
+                <a id="edit-button" 
+                   class="btn btn-warning" 
+                   href="{% url 'tarification:modifier_tarification' details_voyage.id details_voyage.slug %}">
+                    <i class="fas fa-edit me-2"></i> Modifier les Tarifs
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script src="{% static 'js/tarification/details_tarification.js' %}"></script>
+
+{% endblock %}

@@ -1,0 +1,67 @@
+/* Couleurs Thème Clair */
+:root {
+    --light-background: #f8f9fa; /* Très léger gris pour le fond de page */
+    --form-background: #ffffff; /* Blanc pur pour le formulaire */
+    --input-background: #f1f1f1; /* Gris clair pour les fonds de champs */
+    --accent-color: #dc3545;     /* Rouge/Danger pour l'accentuation (boutons, logo) */
+    --text-color: #212529;      /* Noir foncé */
+    --border-color: #dee2e6;     /* Bordures Bootstrap */
+}
+
+body {
+    background-color: var(--light-background);
+    color: var(--text-color);
+    padding-top: 70px;
+}
+
+/* 🚂 Navbar (Clair) */
+#main-navbar-light {
+    background-color: var(--form-background) !important;
+    border-bottom: 1px solid var(--border-color);
+}
+.btn-secondary {
+    color: #fff;
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+.btn-danger {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+}
+.btn-danger:hover {
+    background-color: #c82333;
+    border-color: #c82333;
+}
+
+/* 📝 Formulaire de Création */
+.creation-form {
+    background-color: var(--form-background);
+    border: 1px solid var(--border-color);
+    max-width: 900px;
+    margin: 30px auto;
+}
+
+/* Champs de Saisie */
+.input-group-text {
+    background-color: var(--input-background);
+    border-right: none;
+    color: #6c757d;
+    border-color: var(--border-color);
+}
+
+.form-control {
+    background-color: var(--form-background);
+    border-left: none;
+    color: var(--text-color);
+    border-color: var(--border-color);
+}
+.form-control:focus {
+    box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
+    border-color: var(--accent-color);
+}
+
+/* Étiquettes de Formulaire */
+.form-label {
+    font-weight: bold;
+    color: #343a40;
+}

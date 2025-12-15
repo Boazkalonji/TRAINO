@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmation de Compte TRAINO</title>
+    <style>
+        /* Styles CSS pour la compatibilité Email */
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .header {
+            background-color: #28a745; /* Vert Succès */
+            color: #ffffff;
+            padding: 25px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+        .content {
+            padding: 25px 30px;
+            color: #333333;
+            line-height: 1.6;
+            text-align: center;
+        }
+        .highlight-message {
+            font-size: 18px;
+            font-weight: bold;
+            color: #28a745; /* Vert Succès */
+            margin: 20px 0;
+            padding: 10px;
+            border: 2px solid #28a745;
+            border-radius: 5px;
+            display: inline-block;
+        }
+        .button {
+            display: inline-block;
+            padding: 12px 25px;
+            margin: 30px 0;
+            background-color: #007bff; /* Bleu d'action */
+            color: #ffffff !important;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .footer {
+            background-color: #f8f9fa;
+            color: #6c757d;
+            padding: 15px 25px;
+            text-align: center;
+            font-size: 12px;
+            border-top: 1px solid #eeeeee;
+        }
+        .details p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Compte Confirmé ! 🎉</h1>
+        </div>
+        <div class="content">
+            <p>Bonjour **{{ username }}**, </p>
+            
+            <p class="highlight-message">
+                Votre compte **{{ plateforme_name }}** est maintenant **confirmé avec succès** !
+            </p>
+            
+            <p>Vous pouvez désormais utiliser toutes les fonctionnalités de la plateforme et réserver vos voyages.</p>
+            
+            <div class="details">
+                <p><strong>Votre ID de Profil :</strong> {{ user_id }}</p>
+            </div>
+            
+
+            <p>Si le bouton ne fonctionne pas, copiez-collez ce lien : {{ login_url }}</p>
+
+            <p>Merci de faire confiance à **{{ plateforme_name }}**.</p>
+            <p>Cordialement,<br>L'équipe **{{ plateforme_name }}**</p>
+        </div>
+        <div class="footer">
+            Ceci est un e-mail automatique. &copy; {{ plateforme_name }}
+        </div>
+    </div>
+</body>
+</html>

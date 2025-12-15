@@ -1,0 +1,93 @@
+{% extends 'front/header/header.html' %}
+{% load static %}
+
+
+
+    
+
+{% block containter%}
+
+
+
+
+
+
+
+
+
+    
+
+    <div class="container content-wrapper-light pt-5">
+        
+        <form action="{% url 'voiture:modifier_voiture' voiture.id voiture.slug %}" method="POST" class="creation-form p-5 rounded-3 shadow-lg">
+            {% csrf_token %}
+            <h3 class="mb-4 text-center text-secondary">Rédefinir une Voiture (Wagon)</h3>
+        
+            <div class="row g-4 justify-content-center">
+                
+                <div class="col-md-6">
+                    <label for="id_voiture" class="form-label">Numéro Voiture / Numéro Wagon <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-barcode"></i></span>
+                        <input  type="text" 
+                                class="form-control" id="numero_voiture" 
+                                value="{{voiture.numero_voiture}}"
+                                name="numero_voiture" placeholder="{{voiture.numero_voiture}}" required>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="id_categorie" class="form-label">numero train <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-tags"></i></span>
+                        <select class="form-select" id="id_train" name="id_train" required>
+                            {% for train in trains %}  
+                                <option value="{{ train.id }}"> {{ train.numero_train }}</option> 
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="nombre_place" class="form-label">nombre places <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-barcode"></i></span>
+                        <input value="{{voiture.nombre_place}}" type="int" class="form-control" id="{{voiture.nombre_place}}" name="nombre_place" placeholder="{{voiture.nombre_place}}" required>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="id_tarification" class="form-label">Tarification voiture <span class="text-danger">*</span></label>
+                    
+                    <div class="input-group">
+                        
+                        <span class="input-group-text"><i class="fas fa-tags"></i></span>
+                        <select class="form-select" id="id_tarification" name="id_tarification" required>
+                            <option value="" selected>Sélectionnez la catégorie</option>
+                            
+                            {% for tarification in tarifications %}
+                                <option value="{{ tarification.id }}">{{ tarification.designation_tarififcation }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="d-grid mt-5">
+                <button type="submit" class="btn btn-lg btn-danger fw-bold">
+                    <i class="fas fa-save me-2"></i> Valider
+                </button>
+            </div>
+            
+        </form>
+    </div>
+
+
+
+
+
+
+
+
+
+{% endblock %}

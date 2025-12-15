@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenue sur TRAINO</title>
+    <style>
+        /* Styles CSS Intégrés (Inlining CSS est la meilleure pratique pour les e-mails) */
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border: 1px solid #dddddd;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+        .header {
+            background-color: #007bff; /* Bleu Primaire */
+            color: #ffffff;
+            padding: 20px 25px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .content {
+            padding: 25px;
+            color: #333333;
+            line-height: 1.6;
+        }
+        .highlight-box {
+            background-color: #e9ecef; /* Gris clair */
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .highlight-box p {
+            margin: 5px 0;
+            font-size: 16px;
+            font-weight: bold;
+            color: #007bff;
+        }
+        .footer {
+            background-color: #f8f9fa;
+            color: #6c757d;
+            padding: 20px 25px;
+            text-align: center;
+            font-size: 12px;
+            border-top: 1px solid #dddddd;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px 0;
+            background-color: #28a745; /* Vert pour l'action principale */
+            color: #ffffff !important;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Bienvenue, {{ username }} !</h1>
+        </div>
+        <div class="content">
+            <p>Cher(ère) {{ username }},</p>
+            <p>Toute l'équipe de **{{ plateforme_name }}** vous souhaite la bienvenue sur notre plateforme ! Votre compte a été créé avec succès.</p>
+            
+            <p>Voici les détails de votre compte :</p>
+            
+            <div class="highlight-box">
+                <p>Votre ID de Profil : <strong>{{ user_id }}</strong></p>
+                <p>E-mail du Compte : {{ user_email }}</p>
+            </div>
+            
+            <p>Vous allez utiliser ce code {{user_id}} pour confirmer votre compte</p>
+            
+
+            <p>Si vous avez des questions, n'hésitez pas à nous contacter.</p>
+            <p>Cordialement,<br>L'équipe **{{ plateforme_name }}**</p>
+        </div>
+        <div class="footer">
+            Ceci est un e-mail automatique. Veuillez ne pas y répondre. &copy; {{ plateforme_name }}
+        </div>
+    </div>
+</body>
+</html>

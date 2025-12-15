@@ -1,0 +1,249 @@
+{% extends 'front/header/header.html' %}
+{% load static %}
+
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/traino_materiel/dashbord_categorie.css' %}">
+    <link rel="stylesheet" href="{% static 'css/traino_materiel/detail_categorie.css' %}">
+{% endblock %}
+
+
+{% block containter%}
+
+<div class="container-fluid py-5">
+    
+    <div class="row align-items-center mb-5">
+        <div class="col-md-9">
+            <h1 class="text-dark fw-bold mb-0">
+                <i class="fas fa-grip-vertical me-2 text-primary"></i> Gestion des Catégories de Tarification
+            </h1>
+            <p class="text-muted lead small">Administration et aperçu des classes de voyage (Catégories du train).</p>
+        </div>
+        <div class="col-md-3 text-end">
+            <button type="button" class="btn btn-lg btn-primary shadow-lg" data-bs-toggle="modal" data-bs-target="#creationModal">
+                <i class="fas fa-plus me-2"></i> AJOUTER CATÉGORIE
+            </button>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-5">
+
+        <div class="col-lg-6 col-xl-4">
+            <div class="card shadow-lg border-0 h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <p class="text-uppercase text-danger fw-bold mb-1">Total Catégories Actives</p>
+                            <h2 class="display-5 fw-bold mb-0 text-dark">{{ total_compt }}</h2>
+                        </div>
+                        <i class="fas fa-tags fa-3x text-danger opacity-50"></i>
+                    </div>
+                    <small class="text-muted mt-2 d-block">1ère classe, Premium, VIP, etc.</small>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-lg-6 col-xl-4">
+            <div class="card shadow-lg border-0 h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <p class="text-uppercase text-success fw-bold mb-1">Catégorie la Plus Demandée</p>
+                            <h2 class="display-5 fw-bold mb-0 text-dark">1ère CLASSE</h2>
+                        </div>
+                        <i class="fas fa-star fa-3x text-success opacity-50"></i>
+                    </div>
+                    <small class="text-muted mt-2 d-block">45% des réservations récentes</small>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-6 col-xl-4">
+            <div class="card shadow-lg border-0 h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <p class="text-uppercase text-info fw-bold mb-1">Tarif Moyen (Est.)</p>
+                            <h2 class="display-5 fw-bold mb-0 text-dark">25.00 $</h2>
+                        </div>
+                        <i class="fas fa-money-bill fa-3x text-info opacity-50"></i>
+                    </div>
+                    <small class="text-muted mt-2 d-block">Tarif estimé sur l'ensemble des trajets.</small>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    
+    <div class="row">
+        <div class="col-12">
+            <h4 class="mb-3">Liste des Catégories de Tarification</h4>
+            <div class="card shadow-lg border-0">
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover mb-0 align-middle">
+                            <thead class="bg-light"> <tr class="text-uppercase small fw-bold">
+                                    <th scope="col" class="py-3 ps-4"># ID</th>
+                                    <th scope="col">Désignation Catégorie</th>
+                                    <th scope="col">Tarification</th>
+                                    <th scope="col" class="text-center pe-4">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for cat in categories %}
+                                    <tr class="table-row"> 
+                                        <th scope="row" class="ps-4 text-primary">{{ cat.id }}</th>
+                                        <td class="fw-bold">{{ cat.designation_categorie }}</td>
+                                        <td><span class="badge bg-success-subtle text-success py-2 px-3">{{ cat.tarif }} CDF</span></td>
+                                        <td class="text-center pe-4">
+                                            <a class="btn btn-sm btn-outline-primary me-1" href="{% url 'traino_materiel:modifier_categorie' cat.id cat.slug %}" title="Modifier">
+                                                <i class="fas fa-pencil-alt"></i>
+                                            </a>
+                                            <a class="btn btn-sm btn-outline-danger me-1" href="{% url 'traino_materiel:delete_categorie' cat.id cat.slug %}" title="Supprimer">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </a>
+                                            <a type="button"class="btn btn-sm btn-outline-success me-1" href="{% url 'traino_materiel:details_categorie' cat.id%}" title="Détails">
+                                                <i class="fas fa-eye"></i>
+                                                
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% empty %}
+                                    <tr>
+                                        <td colspan="4" class="text-center text-muted py-4">
+                                            <i class="fas fa-exclamation-circle me-2"></i> Aucune catégorie n'est encore enregistrée.
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    {% if erreur %}
+        <div class="alert alert-danger mt-4 shadow-sm" role="alert">
+            <h4 class="alert-heading"><i class="fas fa-exclamation-triangle me-2"></i> Erreur(s) détectée(s) :</h4>
+            <hr>
+            {% for cle, message in erreur.items %}
+                <p class="mb-0"><strong>{{ message }}</strong></p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+</div>
+
+
+<div class="modal fade" id="creationModal" tabindex="-1" aria-labelledby="creationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white"> <h5 class="modal-title" id="creationModalLabel"><i class="fas fa-plus-circle me-2"></i> Nouvelle Catégorie de Tarification</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                
+
+
+
+
+
+                <div class="container content-wrapper-light pt-5">
+        
+                    <form action="{% url 'traino_materiel:creation_categorie' %}" method="post" class="creation-form p-5 rounded-3 shadow-lg">
+                        {% csrf_token %}
+                        <h3 class="mb-4 text-center text-secondary">Définir une Nouvelle Catégorie de Tarif</h3>
+                    
+                        <div class="row g-4 justify-content-center">
+
+                        
+                            <div class="col-md-6">
+                                <label for="designation_categorie" class="form-label">Libellé Catégorie <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-tag"></i></span>
+                                    <input type="text" class="form-control" id="designation_categorie" name="designation_categorie" placeholder="Ex: 1ère Classe (Voyageurs)" required>
+                                </div>
+                            </div>
+                        
+                            <div class="col-12">
+                                <label for="tarif" class="form-label">Tarification<span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
+                                    <input type="number"class="form-control" id="tarif" name="tarif" placeholder="Ex: 50.00" required>
+                                    <span class="input-group-text">CDF</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    
+                        <div class="d-grid mt-5">
+                            <button type="submit" class="btn btn-lg btn-danger fw-bold">
+                                <i class="fas fa-sitemap me-2"></i> VALIDER
+                            </button>
+                        </div>
+
+                    </form>
+                
+                    {% comment %}
+                        Bloc pour afficher les erreurs au momemnt du traitement du formaulire soumit
+                    {% endcomment %}
+                
+                    {% if erreur %}
+                        <div class="alert alert-danger mt-3" role="alert">
+                            <h4 class="alert-heading">Erreur(s) détectée(s) :</h4>
+                            {% for cle, message in erreur.items %}
+                        
+                                <p class="mb-0">
+                                    <strong>{{ message }} </strong>
+                                </p>
+                            
+                            {% endfor %}
+
+                        </div>
+                    {% endif %}
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+                
+
+
+
+
+
+<script src="{% static 'js/traino_materiel/dashbord_categorie.js' %}"></script>
+
+
+{% endblock %}
+
+
+
+    

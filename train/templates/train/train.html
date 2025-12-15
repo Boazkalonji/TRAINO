@@ -1,0 +1,77 @@
+{% extends 'front/header/header.html' %}
+{% load static %}
+
+
+    {% block extra_css %}
+        <link rel="stylesheet" href="{% static 'css/front/train.css' %}">
+
+
+    {% endblock %}
+
+    
+
+{% block containter%}
+
+
+
+    
+
+    <div class="container content-wrapper-light pt-5">
+
+        <form action="{% url 'train:creation_train' %}" method="POST" class="creation-form p-5 rounded-3 shadow-lg">
+            {% csrf_token %}
+            <h3 class="mb-4 text-center text-secondary">Assembler un Nouveau Train</h3>
+
+            <div class="row g-4 justify-content-center">
+
+                <div class="col-md-4">
+                    <label for="id_train" class="form-label">numero train<span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-train"></i></span>
+                        <input type="text" class="form-control" id="numero_train" name="numero_train" placeholder="Ex: TGV-102" required>
+                    </div>
+                </div>
+
+                
+                <div class="col-md-4">
+                    <label for="taille_ram" class="form-label">taille ram<span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-train"></i></span>
+                        <input type="text" class="form-control" id="taille_ram" name="taille_ram" placeholder="120KM" required>
+                    </div>
+                </div>
+
+                                
+                <div class="col-md-4">
+                    <label for="couleur" class="form-label">couleur<span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-train"></i></span>
+                        <input type="text" class="form-control" id="couleur" name="couleur" placeholder="rouge,verte etc..." required>
+                    </div>
+                </div>
+
+                
+
+
+            </div>
+
+            <div class="d-grid mt-5">
+                <button type="submit" class="btn btn-lg btn-danger fw-bold">
+                    <i class="fas fa-link me-2"></i> Lier et Créer le Train
+                </button>
+            </div>
+
+        </form>
+    </div>
+
+
+
+
+
+
+
+
+{% endblock %}
+
+
+

@@ -1,0 +1,44 @@
+/* Styles pour la page de détails de la catégorie */
+
+/* Général */
+.container {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+/* Amélioration des cartes pour les rendre légères et profondes */
+.card {
+    border-radius: 10px;
+    transition: box-shadow 0.3s ease;
+}
+
+/* Liste de définition (dt/dd) pour les détails clés */
+.details-list dt {
+    color: #6c757d; /* Gris pour les étiquettes */
+    font-weight: 500;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.details-list dd {
+    font-size: 1rem;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+/* Style des badges subtils (nécessaire si votre version de Bootstrap ne les a pas) */
+.bg-success-subtle {
+    background-color: #d1e7dd !important; 
+}
+.text-success {
+    color: #0f5132 !important; 
+}
+
+/* Statistique items */
+.stat-item i {
+    opacity: 0.7;
+}
+
+hr {
+    border-top: 1px dashed #dee2e6;
+}

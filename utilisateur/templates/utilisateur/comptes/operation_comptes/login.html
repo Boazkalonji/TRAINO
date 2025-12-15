@@ -1,0 +1,85 @@
+{% extends '../head.html' %}
+{% load static %}
+
+    <link rel="stylesheet" href="{% static 'css_compte/login.css' %}">
+
+
+    {% block containter %}
+
+
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8 col-lg-6">
+                    <div class="card p-4 login-card">
+                        <div class="card-body">
+
+                            <h3 class="card-title text-center mb-4">
+                                <i class="fas fa-user-circle me-2 text-danger"></i>
+                                CONNEXION
+                            </h3>
+
+                            {% comment %} 
+                                Dans votre fichier utilisateur/comptes/operation_comptes/login.html 
+                            {% endcomment %}
+
+                            {% if erreur %}
+                                <div class="alert alert-danger" role="alert">
+                                    {{ erreur }}
+                                </div>
+                            {% endif %}
+
+
+                          
+                            
+                            <form method="post" action="{% url 'utilisateur:login_comptes' %}">
+                                {% csrf_token %}
+
+                                
+                                <div class="mb-3">
+                                    <label for="username" class="form-label">Nom</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                        <input type="text" 
+                                               class="form-control" 
+                                               id="username" 
+                                               name="username"
+                                               placeholder="Entrez votre nom"
+                                               required>
+                                    </div>
+                                </div>
+
+
+                                <div class="mb-4">
+                                    <label for="password" class="form-label">Mot de passe</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                        <input type="password" 
+                                               class="form-control" 
+                                               id="password" 
+                                               name="password" 
+                                               placeholder="Entrez votre mot de passe"
+                                               required>
+                                    </div>
+                                </div>
+
+
+                                <div class="d-flex justify-content-center ">
+                                    <button type="submit" class="btn btn-danger w-50 btn-xl ">
+                                        <i class="fas fa-sign-in-alt me-2"></i>
+                                        Se Connecter
+                                    </button>
+                                    <a href="{% url 'utilisateur:creation_comptes'%}" type="submit" class="btn btn-warning  btn-xl mx-5">
+                                        
+                                        Créer un compte
+                                    </a>
+
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    {% endblock %}

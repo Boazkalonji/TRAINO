@@ -1,0 +1,106 @@
+{% extends 'front/header/header.html' %}
+{% load static %}
+
+
+
+
+{% block containter%}
+
+    <div class="container content-wrapper-light pt-3">
+
+        <form action="{% url 'tarification:creation_tarification' %}" method="post" class="creation-form p-5 rounded-3 shadow-lg">
+            {% csrf_token %}
+            <h3 class="mb-4 text-center text-secondary">Définir une Nouvelle Tarification</h3>
+        
+            <div class="row g-4 justify-content-center">
+
+                <div class="col-12">
+                    <label for="id_details_voyage" class="form-label">selectionner un trajet puis definisez les prix<span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-train"></i></span>
+                        
+                        <select class="form-select" id="id_details_voyage" name="id_details_voyage" required>
+                            <option value="" selected>Sélectionnez un trajet</option>
+                        
+                            {% for details_voyage in details_voyages %}  details_voyages
+                                <option value="{{ details_voyage.id }}">{{ details_voyage.id }}</option> 
+                            {% endfor %}
+                        
+                        </select>
+                        
+                    </div>
+                </div>
+
+
+
+
+
+
+
+                
+    
+
+                <h4 class="h5 text-primary">Prix Unitaires par Classe</h4>
+                <div class="col-md-4">
+                    <label for="premiere_classe" class="form-label">Prix 1ère Classe <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-money-bill-wave"></i></span>
+                        <input   type="text" class="form-control" id="premiere_classe" name="premiere_classe" placeholder="1èreclasse" value="1èreclasse">
+                        <input type="number" class="form-control" id="pu_premiere_classe" name="pu_premiere_classe" placeholder="Prix 1ère Classe" required min="0">
+                        <span class="input-group-text">CDF</span>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <label for="premium" class="form-label">Prix Premium <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-money-bill-wave"></i></span>
+                        <input   type="text" class="form-control" id="premium" name="premium" placeholder="premium" value="premium">
+                        <input type="number" class="form-control" id="pu_premium" name="pu_premium" placeholder="Prix Premium" required min="0">
+                        <span class="input-group-text">CDF</span>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <label for="luxe" class="form-label">Prix Luxe / VIP <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-money-bill-wave"></i></span>
+                        <input   type="text" class="form-control" id="luxe" name="luxe" placeholder="luxe" value="luxe">
+                        <input type="number" class="form-control" id="pu_luxe" name="pu_luxe" placeholder="Prix Luxe / VIP" required min="0">
+                        <span class="input-group-text">CDF</span>
+                    </div>
+                </div>
+
+        
+ 
+
+            </div>
+
+            
+        
+            <div class="d-grid mt-5">
+                <button type="submit" class="btn btn-lg btn-danger fw-bold">
+                    <i class="fas fa-sitemap me-2"></i> VALIDER
+                </button>
+            </div>
+        </form>
+                    
+        {% comment %}
+            Bloc pour afficher les erreurs au momemnt du traitement du formaulire soumit
+        {% endcomment %}
+                
+        {% if erreur %}
+            <div class="alert alert-danger mt-3" role="alert">
+                <h4 class="alert-heading">Erreur(s) détectée(s) :</h4>
+                {% for cle, message in erreur.items %}
+            
+                    <p class="mb-0">
+                        <strong>{{ message }} </strong>
+                    </p>
+                
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+
+{% endblock %}

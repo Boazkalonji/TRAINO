@@ -1,0 +1,70 @@
+/* Style de la barre de navigation (Fond Bleu/Mauve comme l'image) */
+.custom-navbar {
+    background-color: #3f51b5; /* Une couleur bleue de base */
+    background-image: linear-gradient(to right, #4a69bd, #5c7fbc); /* Dégradé pour se rapprocher de l'image */
+    color: white; /* Texte en blanc par défaut */
+}
+
+/* Style des liens dans la barre de navigation */
+.custom-navbar .nav-link, 
+.custom-navbar .navbar-brand {
+    color: white !important;
+}
+
+/* Style de l'indicateur d'alerte (€10) */
+.custom-navbar .badge {
+    background-color: #fdd835 !important; /* Jaune/Orange vif pour l'alerte */
+    color: #333 !important;
+    padding: 0.5em 0.8em;
+    font-weight: bold;
+    border-radius: 4px;
+}
+
+/* =====================================
+   Comportement du Sous-Menu au Survol 
+   =====================================
+*/
+
+/* Ne s'applique qu'aux grands écrans (lg et plus) */
+@media all and (min-width: 992px) {
+    /* 1. Afficher le menu déroulant au survol */
+    .custom-dropdown-hover:hover .dropdown-menu {
+        display: block;
+        margin-top: 0; /* Supprime l'espace par défaut */
+    }
+
+    /* 2. Retirer la flèche down-arrow (si souhaité) */
+    .custom-dropdown-hover .dropdown-toggle::after {
+        display: inline-block; /* Pour l'afficher */
+        margin-left: .255em;
+        vertical-align: .255em;
+        content: ""; /* Si vous voulez une icône personnalisée, vous pouvez la changer ici */
+        border-top: .3em solid transparent;
+        border-right: .3em solid transparent;
+        border-bottom: 0;
+        border-left: .3em solid transparent;
+        transform: rotate(0deg); /* La flèche reste pointée vers le bas */
+    }
+}
+
+/* Style du sous-menu déroulant pour ressembler à celui de l'image */
+.dropdown-menu {
+    border-radius: 0;
+    box-shadow: 0 4px 8px rgba(0,0,0,.15);
+    padding: 0.5rem 0;
+}
+
+/* Style de l'en-tête "FEATURED DESTINATIONS" */
+.dropdown-header {
+    font-size: 0.75rem; /* Plus petit */
+    color: #888;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+}
+
+/* Style des liens dans le sous-menu */
+.dropdown-item {
+    font-size: 0.95rem;
+    padding: 0.5rem 1rem;
+}

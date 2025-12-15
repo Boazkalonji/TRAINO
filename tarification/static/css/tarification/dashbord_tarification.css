@@ -1,0 +1,34 @@
+
+.page-header-row {
+    margin-bottom: 2rem;
+}
+
+.sidebar-card {
+    background-color: #ffffff; 
+    border-radius: 0.75rem; 
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); 
+}
+
+.sidebar-link-group .nav-link {
+    padding: 0.75rem 1.5rem;
+    color: #4b5563; 
+    transition: all 0.2s ease-in-out;
+    border-radius: 0.5rem;
+    margin-bottom: 0.25rem;
+}
+.sidebar-link-group .nav-link:hover,
+.sidebar-link-group .nav-link.active {
+    background-color: #f3f4f6; 
+    color: #dc3545; 
+}
+
+
+.sticky-sidebar {
+    position: sticky;
+    top: 20px; 
+}
+
+
+.container-fluid {
+    min-height: 100vh;
+}

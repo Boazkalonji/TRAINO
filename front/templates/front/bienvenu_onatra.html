@@ -1,0 +1,75 @@
+{% extends 'front/header/header.html' %}
+{% load static %}
+
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/front/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/front/bienvenu_onatra.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+{% endblock %}
+
+{% block containter %}
+
+<nav class="navbar navbar-expand-lg navbar-dark shadow-sm" style="background-color: #080160;">
+    <div class="container-fluid">
+        <div class="mx-auto">
+            <a class="navbar-brand d-flex align-items-center">
+                <i class="fas fa-train me-2" style="color: #f74545; font-size: 1.5rem;"></i>
+                <span style="font-size: 1.5rem; font-weight: bold; color: white;">TRAINO</span>
+            </a>
+        </div>
+    </div>
+</nav>
+
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10 col-xl-8">
+
+            <div class="card shadow-lg border-0">
+                <div class="card-body p-0">
+                    <div class="row g-0">
+
+                        <div class="col-md-6 d-none d-md-block">
+                            <div class="image-container">
+                                <img src="{% static 'img/99.jpg' %}" 
+                                            alt="Image représentant l'ONATRA ou les transports" 
+                                            class="img-fluid rounded-start h-100" 
+                                            style="object-fit: cover;">
+                                
+                                <div class="image-overlay">
+                                    <h4 class="overlay-text">Piliers du transport national</h4>
+                                    <p class="overlay-subtext">Voyez comment nous connectons la RDC.</p>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-6 p-4 p-md-5 d-flex flex-column justify-content-center">
+
+                            <h2 class="card-title text-danger mb-3">
+                                L'Office National des Transports (ONATRA)
+                            </h2>
+                            <p class="card-text lead text-muted">
+                                L'ONATRA est l'acteur historique et central des transports en République Démocratique du Congo. Nous jouons un rôle crucial dans l'économie nationale en assurant la gestion et l'exploitation des infrastructures de transport multimodales (ferroviaires, maritimes et fluviales).
+                            </p>
+
+                            <p class="card-text mb-4">
+                                Notre mission est de garantir la fluidité et la sécurité des mouvements de marchandises et de personnes à travers le pays, contribuant ainsi au développement et à l'intégration régionale.
+                            </p>
+
+                            <a href="{% url 'front:index' %}" class="btn btn-danger w-100 w-md-auto mt-2">
+                                Voir Plus sur nos services
+                            </a>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+{% endblock %}

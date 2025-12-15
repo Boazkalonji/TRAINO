@@ -1,0 +1,83 @@
+/* Couleurs Thème Clair & ONATRA */
+:root {
+    --light-background: #f8f9fa; /* Fond de page */
+    --card-background: #ffffff; /* Fond des cartes/éléments */
+    --text-color: #212529;      
+    --danger-color: #dc3545;     /* Rouge ONATRA (Accent principal) */
+    --secondary-color: #6c757d;  /* Gris secondaire */
+    --border-color: #dee2e6;     
+}
+
+body {
+    background-color: var(--light-background);
+    color: var(--text-color);
+    padding-top: 70px;
+}
+
+/* 🚂 Navbar */
+#main-navbar-light {
+    background-color: var(--card-background) !important;
+    border-bottom: 1px solid var(--border-color);
+}
+.navbar-brand .text-danger {
+    color: var(--danger-color) !important;
+}
+.btn-outline-secondary {
+    color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+/* Conteneur de la page */
+.content-wrapper-light {
+    min-height: calc(100vh - 70px);
+}
+
+/* 📊 Styles des KPI Cards */
+.card {
+    border: none;
+    border-radius: 0.5rem;
+}
+.border-start-5 {
+    border-left: 5px solid !important; /* Bordure d'accentuation pour les KPI */
+}
+/* Définition des couleurs des bordures pour les KPI */
+.border-danger { border-color: var(--danger-color) !important; }
+.border-secondary { border-color: var(--secondary-color) !important; }
+.border-success { border-color: var(--success-color) !important; }
+.border-primary { border-color: #0d6efd !important; }
+
+/* 📑 Tableau de Détails */
+.table-hover tbody tr:hover {
+    background-color: #fcebeb; /* Léger survol rouge/clair */
+}
+.table-dark th {
+    background-color: #343a40 !important;
+    color: white;
+}
+/* Styles des boutons d'édition/téléchargement */
+.btn-danger {
+    background-color: var(--danger-color);
+    border-color: var(--danger-color);
+}
+.btn-danger:hover {
+    background-color: #c82333;
+    border-color: #c82333;
+}
+.btn-success {
+    background-color: #198754;
+    border-color: #198754;
+}
+.btn-success:hover {
+    background-color: #157347;
+    border-color: #157347;
+}
+
+/* Champ de date */
+.form-control {
+    border-radius: 0.3rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.form-control:focus {
+    border-color: var(--danger-color);
+    box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
+}

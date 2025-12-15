@@ -1,0 +1,11 @@
+{% load i18n %}
+{% autoescape off %}
+Bonjour {{ user.username }},
+
+Veuillez cliquer sur le lien suivant pour confirmer votre adresse e-mail et activer votre compte :
+
+{{ activation_url }}
+
+Merci!
+L'équipe {{ site.name }}
+{% endautoescape %}

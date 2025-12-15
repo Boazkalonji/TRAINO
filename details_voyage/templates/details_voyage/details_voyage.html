@@ -1,0 +1,122 @@
+{% extends 'front/header/header.html' %}
+{% load static %}
+
+
+
+    
+
+{% block containter%}
+
+
+
+
+
+
+
+
+
+            <div class="container content-wrapper-light pt-5">
+    
+                <form action="{% url 'details_voyage:creation_details_voyage' %}" method="POST" enctype="multipart/form-data" class="creation-form p-5 rounded-3 shadow-lg">
+                    {% csrf_token %}
+                    <h3 class="mb-4 text-center text-secondary">Enregistrer un Nouveau trajet</h3>
+                
+                    <div class="row g-4 justify-content-center">
+                        <div class="col-md-6">
+                            <label for="distance" class="form-label">distance <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-barcode"></i></span>
+                                <input type="number" class="form-control" id="distance" name="distance" placeholder="Ex: WGN-A01" required>
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-md-6">
+                            <label for="image_input" class="form-label">Photo de la Gare</label> 
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-image"></i></span>
+                                <input 
+                                    type="file" 
+                                    class="form-control" 
+                                    id="image" 
+                                    name="image" 
+                                    accept="image/*" 
+                                    {% if form.image.field.required %}required{% endif %} 
+                                >
+                            </div>
+                        </div>
+
+                    
+                        <div class="col-md-6">
+                            <label for="id_gare_depart" class="form-label">gare de depart<span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-train"></i></span>
+                                <select class="form-select" id="id_gare_depart" name="id_gare_depart" required>
+                                    <option value="" selected>Sélectionnez la gare depart</option>
+                                
+                                    {% for gare in gares %}  
+                                        <option value="{{ gare.id }}">{{ gare.libelle_gare }}</option> 
+                                    {% endfor %}
+                                
+                                </select>
+                            </div>
+                        </div>
+                    
+                        <div class="col-md-6">
+                            <label for="id_gare_arrive" class="form-label">gare d'arrivée<span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-train"></i></span>
+                                <select class="form-select" id="id_gare_arrive" name="id_gare_arrive" required>
+                                    <option value="" selected>Sélectionnez la gare depart</option>
+                                
+                                    {% for gare in gares %}  
+                                        <option value="{{ gare.id }}">{{ gare.libelle_gare }}</option> 
+                                    {% endfor %}
+                                
+                                </select>
+                            </div>
+                        </div>
+                    
+                    
+                        <div class="col-md-6">
+                            <label for="id_voyage" class="form-label">voyages<span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-tags"></i></span>
+                                <select class="form-select" id="id_voyage" name="id_voyage" required>
+                                    <option value="" selected>Sélectionnez la voyage</option>
+                                    {% for voyage in voyages %}
+                                        <option value="{{ voyage.id }}">{{ voyage.id_train }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="d-grid mt-5">
+                        <button type="submit" class="btn btn-lg btn-danger fw-bold">
+                            <i class="fas fa-save me-2"></i> Enregistrer le trajet
+                        </button>
+                    </div>
+                </form>
+                {% if erreur %}
+                    <div class="alert alert-danger" role="alert">
+                        <h4 class="alert-heading">Erreur(s) détectée(s) :</h4>
+                        
+                        <p class="mb-0">
+                            <strong>{{ erreur }} </strong>
+                        </p>
+        
+                    </div>
+                {% endif %}
+            </div>
+
+
+
+
+
+
+
+
+
+{% endblock %}

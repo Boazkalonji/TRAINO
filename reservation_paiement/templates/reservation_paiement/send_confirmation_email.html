@@ -1,0 +1,145 @@
+{% load static %}
+<html>
+<head>
+    <title>Confirmation de Réservation - TRAINO</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px;">
+
+    <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+        
+        <h1 style="color: #c0392b; border-bottom: 2px solid #c0392b; padding-bottom: 10px;">
+            🚆 Réservation Confirmée !
+        </h1>
+
+        <p>Bonjour **{{ username }}**, </p>
+        
+        <p>
+            Nous vous remercions pour votre réservation. Nous sommes heureux de vous confirmer que votre paiement a été traité avec succès et que votre réservation est maintenant garantie.
+        </p>
+
+        <h3 style="color: #2c3e50; margin-top: 25px;">Détails de votre Billet</h3>
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+            <tr>
+                <td style="padding: 8px 0; border-bottom: 1px solid #eee; font-weight: bold;">Numéro de Billet :</td>
+                <td style="padding: 8px 0; border-bottom: 1px solid #eee;">{{ numero_billet }}</td>
+            </tr>
+            <tr>
+                <td style="padding: 8px 0; border-bottom: 1px solid #eee; font-weight: bold;">Date de Paiement :</td>
+                <td style="padding: 8px 0; border-bottom: 1px solid #eee;">{{ date_reservation }}</td>
+            </tr>
+            <tr>
+                <td style="padding: 8px 0; border-bottom: 1px solid #eee; font-weight: bold;">Montant Total :</td>
+                <td style="padding: 8px 0; border-bottom: 1px solid #eee;">**{{ montant }}**</td>
+            </tr>
+            <tr>
+                <td style="padding: 8px 0; font-weight: bold;">Mode de Paiement :</td>
+                <td style="padding: 8px 0;">{{ mode_paiement }}</td>
+            </tr>
+        </table>
+        
+        <p>
+            Vous trouverez votre **QR Code** en pièce jointe de cet e-mail. Veuillez le conserver précieusement et le présenter au contrôleur pour valider votre embarquement.
+        </p>
+        
+
+
+        <p style="margin-top: 30px; font-size: 12px; color: #7f8c8d;">
+            Ceci est un e-mail automatique. Veuillez ne pas y répondre.
+        </p>
+    </div>
+
+
+
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+        <tr>
+            <td align="center" style="padding: 20px 10px;">
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" class="container" style="max-width: 400px; background-color: #ffffff; border: 1px solid #000; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                    
+                    <tr>
+                        <td align="center" style="padding: 10px 0; border-bottom: 2px solid #000; background-color: #e0e0e0;">
+                            <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                                <tr>
+                                    <td width="33%" align="center">
+                                        <i class="fas fa-subway fa-5x" style="color: #f74545;"></i>
+                                    </td>
+                                    <td width="34%" align="center" style="font-family: Arial, sans-serif; font-size: 10px;">
+                                        CHEMINS DE FER<br>
+                                        Gare Centrale / KINSHASA
+                                    </td>
+                                    <td width="33%" align="center">
+                                        <i class="fas fa-subway fa-5x" style="color: #f74545;"></i>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td align="center" style="padding: 15px 0 10px 0; font-size: 24px; font-weight: bold; color: #000; background-color: #ccc; border-bottom: 1px solid #000;">
+                            TICKET N° {{ paiement.id }}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="padding: 15px 20px 0 20px;">
+                            <table width="100%" border="0" cellpadding="0" cellspacing="0" style="font-size: 14px; line-height: 1.6;">
+                                
+                                <tr>
+                                    <td width="30%" style="font-weight: bold; padding: 2px 0;">CI N° :</td>
+                                    <td width="70%" style="padding: 2px 0;">{{ numero_billet }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: bold; padding: 2px 0;">Nom :</td>
+                                    <td style="padding: 2px 0;">{{ username }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: bold; padding: 2px 0;">Payé :</td>
+                                    <td style="padding: 2px 0;">{{ montant }} ({{ mode_paiement }})</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: bold; padding: 2px 0;">H & S :</td>
+                                    <td style="padding: 2px 0;">{{ date_reservation }} | CONFIRMÉ</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: bold; padding: 2px 0;">Trajet :</td>
+                                    <td style="padding: 2px 0;">{{gare_depart}} - {{gare_arrivee}}</td>
+                                </tr>
+
+
+                                <img src="{{ paiement.qr_code.url }}" alt="QR Code Billet TRAINO" style="display: block;">
+           
+
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td align="center" style="padding: 20px 0;">
+                            <img src="cid:qr_code_billet_cid" alt="QR Code du Billet" width="150" height="150" style="display: block; border: 1px solid #000; margin: 0 auto;">
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td align="center" style="padding: 10px 20px; border-top: 1px solid #000; font-size: 12px; background-color: #e0e0e0;">
+                            Distance: {{distance}} km| Date: {{ date_reservation|date:"d/m/Y" }}
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td align="center" style="padding: 20px; font-size: 14px; color: #555;">
+                            Veuillez présenter ce billet (ci-dessus) et votre QR Code pour l'embarquement.
+                        </td>
+                    </tr>
+
+                </table>
+            </td>
+        </tr>
+    </table>
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,71 @@
+{% extends 'front/header/header.html' %}
+{% load static %}
+
+
+
+    
+
+{% block containter%}
+
+
+
+
+
+
+
+
+
+    
+
+    <div class="container content-wrapper-light pt-5">
+        
+        <form action="{% url 'gare:modifier_gare' gare.id gare.slug %}" method="POST" class="creation-form p-5 rounded-3 shadow-lg">
+            {% csrf_token %}
+            <h3 class="mb-4 text-center text-secondary">Rédefinir une Voiture (Wagon)</h3>
+        
+            <div class="row g-4 justify-content-center">
+                
+                <div class="col-md-6">
+                    <label for="id_voiture" class="form-label">libelle gare<span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-barcode"></i></span>
+                        <input  type="text" 
+                                class="form-control" id="numero_voiture" 
+                                value="{{gare.libelle_gare}}"
+                                name="libelle_gare" placeholder="{{gare.libelle_gare}}" required>
+                    </div>
+                </div>
+
+
+                <div class="col-md-6">
+                    <label for="id_voiture" class="form-label">ville gare<span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-barcode"></i></span>
+                        <input  type="text" 
+                                class="form-control" id="numero_voiture" 
+                                value="{{ gare.ville_gare }}"
+                                name="ville_gare" placeholder="{{ gare.ville_gare }}" required>
+                    </div>
+                </div>
+
+
+            </div>
+        
+            <div class="d-grid mt-5">
+                <button type="submit" class="btn btn-lg btn-danger fw-bold">
+                    <i class="fas fa-save me-2"></i> Valider
+                </button>
+            </div>
+            
+        </form>
+    </div>
+
+
+
+
+
+
+
+
+
+{% endblock %}
