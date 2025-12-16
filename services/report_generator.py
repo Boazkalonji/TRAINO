@@ -162,45 +162,16 @@ def generer_pdf_local(jasper_filename, output_filename, db_config, parameters=No
 
 
 
-# Fichier : Où se trouve render_to_pdf/link_callback
-
 def link_callback(uri, rel):
-    # 1. Nettoyer l'URI (ex: /static/css/publication_avis/publication_avis.css -> css/publication_avis/publication_avis.css)
-    path_relatif = uri.replace(settings.STATIC_URL, "")
+    # Chemin absolu de la ressource dans le dossier STATIC_ROOT
+    path = os.path.join(settings.STATIC_ROOT, uri.replace(settings.STATIC_URL, ""))
     
-    # 2. ESSAYER le chemin direct dans STATIC_ROOT (ce qui a échoué)
-    chemin_direct = os.path.join(settings.STATIC_ROOT, path_relatif)
-    
-    # 3. ESSAYER le chemin avec le nom de l'application (le chemin collecté par Django)
-    
-    # Exemple : extrait 'publication_avis' de l'URI (peut être plus complexe si URI ne contient pas app_name)
-    # L'image 'img/onatra.png' vient du dossier 'publication_avis/static/img/onatra.png'
-    # On va vérifier si le chemin existe dans la base des statiques collectées.
-    
-    # Chemin sur le disque de Render pour les statiques collectées
-    # (Nous supposons que 'css' ou 'img' est le premier dossier après l'application)
-    
-    # Tentons une approche plus simple : si le fichier n'est pas trouvé dans le chemin direct,
-    # nous le cherchons dans un sous-dossier portant le nom de l'application.
-    
-    # Déterminons le nom de l'application (ici 'publication_avis' pour le CSS et 'onatra.png')
-    app_name = 'publication_avis' # à adapter si l'image vient d'une autre app comme 'base' ou 'assets'
-    
-    # Chemin avec le nom de l'application (le chemin le plus probable en prod)
-    chemin_app = os.path.join(settings.STATIC_ROOT, app_name, path_relatif)
+    # Validation (facultatif mais recommandé pour le débogage)
+    if not os.path.isfile(path):
+        print(f"FICHIER STATIQUE MANQUANT: {path}")
+        return None # Retourne None si le fichier n'est pas trouvé
 
-    # DÉCISION
-    if os.path.isfile(chemin_direct):
-        return chemin_direct
-        
-    elif os.path.isfile(chemin_app):
-        return chemin_app
-        
-    else:
-        # Si vous arrivez ici, rien n'a été trouvé.
-        print(f"FICHIER STATIQUE MANQUANT DANS TOUS LES CHEMINS: {chemin_direct} OU {chemin_app}")
-        # Si c'est un fichier critique (CSS/Image), on retourne None pour signaler l'erreur
-        return None
+    return path
 
 
 
