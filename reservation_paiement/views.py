@@ -16,7 +16,7 @@ from .generated_qrcode.genereted_qrcode import genereted_qrcode
 from .generated_qrcode.send_confirmation_email import send_confirmation_email
 from datetime import date
 from django.http import FileResponse, Http404
-from services.report_generator import generer_pdf_local,generer_pdf_local_ticket
+from services.report_generator import generer_pdf_local
 from services.generer_num_billet import generer_num_billet, extraire_initiales_gare
 import os
 from decimal import Decimal
