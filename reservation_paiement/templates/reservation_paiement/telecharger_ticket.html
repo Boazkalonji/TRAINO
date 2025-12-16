@@ -1,0 +1,211 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Ticket ONATRA N° {{ numero_billet }}</title>
+    
+    <style>
+        /* Variables de couleur (peuvent être ajustées) */
+        :root {
+            --primary-color: #dc3545; /* Rouge (couleur ONATRA/Train) */
+            --secondary-color: #343a40; /* Gris foncé */
+            --bg-light: #f8f9fa; 
+            --text-luxe: #007bff; /* Bleu pour la classe Luxe */
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            font-size: 10pt;
+            margin: 0; 
+            padding: 0;
+            background-color: #fff;
+            color: #333;
+        }
+        .ticket-container {
+            width: 85mm; /* Largeur typique d'un billet/ticket */
+            margin: 10mm auto; /* Centré sur la page */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ddd;
+            background-color: #fff;
+            position: relative;
+        }
+
+        /* En-tête du ticket */
+        .ticket-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 15px;
+            text-align: center;
+        }
+        .ticket-header h1 {
+            font-size: 12pt;
+            margin: 0;
+            font-weight: normal;
+        }
+        .ticket-header p {
+            font-size: 9pt;
+            margin: 2px 0 0 0;
+        }
+        
+        /* Section Trajet (Focus) */
+        .ticket-trajet {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        .city-code {
+            font-size: 28pt;
+            font-weight: 900;
+            display: inline-block;
+            margin: 0 10px;
+        }
+        .arrow {
+            font-size: 18pt;
+            vertical-align: top;
+            display: inline-block;
+            margin-top: 5px;
+        }
+        .route-label {
+            font-size: 8pt;
+            text-transform: uppercase;
+            display: block;
+            margin-top: 5px;
+        }
+
+        /* Détails du Billet (Grille) */
+        .ticket-details {
+            padding: 15px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .detail-item {
+            width: 50%;
+            padding: 5px 0;
+            box-sizing: border-box;
+        }
+        .detail-label {
+            font-size: 8pt;
+            color: #6c757d;
+            text-transform: uppercase;
+            margin-bottom: 2px;
+            display: block;
+        }
+        .detail-value {
+            font-size: 10pt;
+            font-weight: bold;
+        }
+        .full-width {
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        /* Classe de luxe spécifique */
+        .luxe-class {
+            color: var(--text-luxe);
+            font-weight: 900;
+            font-style: italic;
+        }
+
+        /* Section QR Code et Billet N° */
+        .qr-section {
+            padding: 15px;
+            text-align: center;
+            background-color: var(--bg-light);
+            border-top: 1px dashed #ccc; /* Effet de billet déchirable */
+        }
+        .qr-section img {
+            width: 120px;
+            height: 120px;
+            border: 1px solid #ddd;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+        .billet-number {
+            font-size: 14pt;
+            font-weight: 900;
+            color: var(--primary-color);
+            margin-top: 5px;
+        }
+        
+        /* Pied de page Légal */
+        .footer-legal {
+            text-align: center;
+            font-size: 7pt;
+            padding: 10px 15px;
+            color: #6c757d;
+            border-top: 1px solid #eee;
+        }
+        .footer-legal p {
+            margin: 2px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="ticket-container">
+        
+        <div class="ticket-header">
+            <h1>OFFICE NATIONAL DES TRANSPORTS - ONATRA s.a.</h1>
+            <p>Kinshasa / Gombe - Billet de Train Express</p>
+        </div>
+
+        <div class="ticket-trajet">
+            <span class="route-label">Départ</span>
+            <span class="city-code">{{ gare_depart|upper }}</span>
+            <span class="arrow">&#8594;</span> <span class="city-code">{{ gare_arrivee|upper }}</span>
+            <span class="route-label">Arrivée</span>
+        </div>
+
+        <div class="ticket-details">
+            
+            <div class="detail-item">
+                <span class="detail-label">Classe / Catégorie</span>
+                <span class="detail-value {% if 'luxe' in designation_classe|lower %}luxe-class{% endif %}">{{ designation_classe|upper }}</span>
+            </div>
+            
+            <div class="detail-item">
+                <span class="detail-label">Date & Heure</span>
+                <span class="detail-value">{{ date_paiement|date:"d/m/Y H:i" }}</span>
+            </div>
+            
+            <div class="detail-item">
+                <span class="detail-label">Montant Payé</span>
+                <span class="detail-value">{{ montant_paiement }} $US</span>
+            </div>
+            
+            <div class="detail-item">
+                <span class="detail-label">Paiement via</span>
+                <span class="detail-value">{{ mode_paiement|upper }}</span>
+            </div>
+
+            <div class="detail-item full-width">
+                <span class="detail-label">Passager (Email: {{ email_client }})</span>
+                <span class="detail-value">{{ client_name|upper }}</span>
+            </div>
+        </div>
+
+        <div class="qr-section">
+            {% if qr_code_path %}
+            <img src="{{ qr_code_path }}" alt="QR Code du Billet">
+            {% else %}
+            <div style="width:120px; height:120px; margin: 0 auto 10px auto; border: 1px dashed red; line-height: 120px; font-size: 8pt; color: red;">QR CODE MANQUANT</div>
+            {% endif %}
+            
+            <p class="detail-label" style="color: var(--secondary-color);">Numéro Unique du Billet</p>
+            <div class="billet-number">
+                 N° {{ numero_billet }}
+            </div>
+            <p style="font-size: 8pt; margin-top: 5px; color: #6c757d;">Distance: {{ distance }} KM</p>
+        </div>
+
+        <div class="footer-legal">
+            <p>Société Anonyme Unipersonnelle - capital social : 1.646.432.500.000 FC</p>
+            <p>N°R.C.C.M. CD/KIN/RCCM/14-B-3292-N° ID NAT.01-71-N60911K N°Impôt: AO 700220Y</p>
+            <p>177, BLVD DU 30 JUIN - KINSHASA/GOMBE - EMAIL: ONATRAKIN@GMAIL.COM - WWW.ONATRA-CD.COM</p>
+        </div>
+
+    </div>
+</body>
+</html>

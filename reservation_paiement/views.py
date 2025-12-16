@@ -16,7 +16,7 @@ from .generated_qrcode.genereted_qrcode import genereted_qrcode
 from .generated_qrcode.send_confirmation_email import send_confirmation_email
 from datetime import date
 from django.http import FileResponse, Http404
-from services.report_generator import generer_pdf_local
+from services.report_generator import generer_pdf_local,render_to_pdf
 from services.generer_num_billet import generer_num_billet, extraire_initiales_gare
 import os
 from decimal import Decimal
@@ -27,7 +27,8 @@ from django.conf import settings
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from services.report_generator import generer_pdf_local
-
+from django.shortcuts import render
+from django.http import HttpResponse, Http404
 
 
 
@@ -752,6 +753,18 @@ def rapport_jour_cash_mobile(request):
     else:
         raise Http404("Échec de la génération du rapport.")
 
+
+
+
+
+
+
+
+
+
+
+"""
+
 @login_required
 def telecharger_ticket(request): 
     
@@ -820,3 +833,73 @@ def telecharger_ticket(request):
 
     else:
         raise Http404("Échec de la génération du rapport.")
+
+"""
+
+
+
+
+
+
+
+
+
+
+
+
+@login_required
+def telecharger_ticket(request): 
+    
+
+    try:
+       
+        dernier_paiement = Paiement.objects.filter(
+            id_user=request.user
+        ).select_related(
+            'id_tarification__id_details_voyage__id_gare_depart', 
+            'id_tarification__id_details_voyage__id_gare_arrive',
+            'id_mode_paiement'
+        ).order_by('-date_paiement', '-id').first()
+
+        if not dernier_paiement:
+            raise Http404("Aucun paiement trouvé pour cet utilisateur.")
+
+    except Exception as e:
+        
+        raise Http404(f"Erreur lors de la récupération du paiement : {e}")
+
+
+   
+    paiement = dernier_paiement
+    tarification = paiement.id_tarification
+    details_voyage = tarification.id_details_voyage
+    
+    
+    context = {
+        'paiement': paiement,
+        'client_name': request.user.get_full_name() or request.user.username,
+        'numero_billet': paiement.numero_billet,
+        'montant_paiement': paiement.montant_paiement,
+        'nombre_place_reserve': paiement.nombre_place_reserve,
+        'designation_classe': tarification.designation_tarififcation,
+        'mode_paiement': paiement.id_mode_paiement.libelle_mode,
+        'date_paiement': paiement.date_paiement,
+        'email_client': paiement.email_user,
+        'gare_depart': details_voyage.id_gare_depart.libelle_gare,
+        'gare_arrivee': details_voyage.id_gare_arrive.libelle_gare,
+        'distance': details_voyage.distance,
+        'qr_code_path': paiement.qr_code.url if paiement.qr_code else None,
+    }
+    
+   
+    template_src = 'reservation_paiement/telecharger_ticket.html'
+    pdf_data = render_to_pdf(template_src, context)
+    
+    if pdf_data:
+        PDF_OUTPUT = f'ticket_{request.user.username}_{paiement.numero_billet}.pdf'
+        response = HttpResponse(pdf_data, content_type='application/pdf')
+        response['Content-Disposition'] = f'attachment; filename="{PDF_OUTPUT}"'
+        return response
+
+    else:
+        raise Http404("Échec de la génération du ticket PDF.")
