@@ -263,46 +263,53 @@ def telecharger_dernier_publication_avis(request):
 
 
 
+from django.shortcuts import render
+from django.http import HttpResponse, Http404
+from django.db.models import Max
+from django.contrib.auth.decorators import login_required
+# Assurez-vous d'importer vos modèles Tarification et Publication_avis ici
+# Exemple : from .models import Publication_avis, Tarification 
+# et d'importer votre fonction render_to_pdf
 
 @login_required
 def telecharger_dernier_publication_avis(request): 
     
-
+    # Récupération de l'avis
     publication_avis = Publication_avis.objects.order_by('-id').first()
 
     if not publication_avis:
-      
+        # Si aucun avis n'est trouvé
         raise Http404("Aucune publication disponible pour le téléchargement.")
 
-    
-    tarification_avis_pu = Tarification.objects.values(
+    # CODE MIS À JOUR pour récupérer le PU le plus élevé par Désignation
+    # On utilise 'tarification_max' comme nom de variable pour correspondre à votre contexte
+    tarification_max = Tarification.objects.values(
         'designation_tarififcation'
     ).annotate(
         pu_le_plus_eleve = Max('pu')
-    ).order_by('-pu_le_plus_eleve') 
+    ).order_by('designation_tarififcation') 
     
- 
+    
     context = {
         'publication_avis': publication_avis,
-        'tarification_max': tarification_avis_pu,
-        
+        # Utilisation de la variable mise à jour
+        'tarification_max': tarification_max, 
     }
     
-
+    # Assurez-vous que le nom du template est celui que vous utilisez (il devrait être le monolithique)
     template_src = 'publication_avis/dernier_publication_avis_pdf_render.html' 
-   
-
-
+    # REMARQUE: J'ai conservé votre nom de template actuel. 
+    # Si c'est le template avec tout le CSS en ligne, c'est bon.
+    
     pdf_data = render_to_pdf(template_src, context)
     
     if pdf_data:
-        PDF_OUTPUT = f'avis_{publication_avis.reference_avis}_{publication_avis.date_avis}.pdf'
+        # Assurez-vous que la fonction date est correctement gérée si vous avez une erreur
+        PDF_OUTPUT = f'avis_{publication_avis.reference_avis}_{publication_avis.date_avis.strftime("%Y-%m-%d")}.pdf'
         
-   
         response = HttpResponse(pdf_data, content_type='application/pdf')
         response['Content-Disposition'] = f'attachment; filename="{PDF_OUTPUT}"'
         return response
 
     else:
-    
         raise Http404("Échec de la génération du rapport PDF.")

@@ -10,18 +10,18 @@
         body {
             font-family: Arial, sans-serif;
             font-size: 10pt;
-            margin: 0;
+            margin: 0; 
             padding: 0;
             color: #333;
         }
         .container {
             width: 90%;
-            margin: 0 auto;
+            margin: 0 auto; /* Pour centrer, mais pas de marges verticales agressives */
         }
         .document-container {
-            padding: 40px;
-            border: 1px solid #ccc;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px 40px; /* Remplissage haut/bas réduit, côtés conservés */
+            border: none; /* Supprime le cadre */
+            box-shadow: none; /* Supprime l'ombre */
         }
         .row::after {
             content: "";
@@ -38,14 +38,10 @@
         .fw-bolder { font-weight: 900; }
         .fst-italic { font-style: italic; }
         .text-uppercase { text-transform: uppercase; }
-        .mb-0 { margin-bottom: 0 !important; }
-        .mt-2 { margin-top: 10px; }
-        .mt-4 { margin-top: 20px; }
-        .mt-5 { margin-top: 30px; }
-        .my-4 { margin-top: 20px; margin-bottom: 20px; }
-        .my-5 { margin-top: 30px; margin-bottom: 30px; }
-        .pt-3 { padding-top: 15px; }
-        .small { font-size: 8pt; }
+        .my-4 { margin-top: 15px; margin-bottom: 15px; } /* LÉGÈREMENT réduit */
+        .my-5 { margin-top: 15px; margin-bottom: 15px; } /* LÉGEREMENT réduit */
+        .body-section { margin-bottom: 15px; }
+        .title-section { margin-bottom: 15px; }
         .text-justify { text-align: justify; }
         
         /* Custom Structure */
