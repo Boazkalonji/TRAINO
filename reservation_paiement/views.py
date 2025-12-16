@@ -878,8 +878,8 @@ def telecharger_ticket(request):
 
     if paiement.qr_code and hasattr(paiement.qr_code, 'url'):
         # Si le chemin relatif ne fonctionne pas en prod, décommentez la ligne absolue ci-dessous.
-        # qr_code_path_url = request.build_absolute_uri(paiement.qr_code.url)
-        qr_code_path_url = paiement.qr_code.url
+        qr_code_path_url = request.build_absolute_uri(paiement.qr_code.url)
+        #qr_code_path_url = paiement.qr_code.url
 
 
 
