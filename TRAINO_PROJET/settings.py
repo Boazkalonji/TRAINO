@@ -225,6 +225,7 @@ SESSION_SAVE_EVERY_REQUEST = True
 SESSION_COOKIE_AGE = 10 * 60  # 600 secondes
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
+"""
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'  
@@ -233,7 +234,26 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'pinhotelp@gmail.com'
 EMAIL_HOST_PASSWORD = 'jgfb xabb dtzs waat'
 
+"""
 
+
+
+
+
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+# Utilisation de os.environ.get() : 
+# 1. Il cherche la valeur dans les variables d'environnement de Render.
+# 2. S'il ne la trouve pas (par exemple, en développement local), il utilise la valeur par défaut (la vôtre).
+# NOTE: Le mot de passe D'APPLICATION doit être stocké SANS ESPACES DANS RENDER.
+
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', 'pinhotelp@gmail.com')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', 'jgfbxabbdtzswaat')
 
 
 

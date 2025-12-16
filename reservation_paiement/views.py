@@ -29,7 +29,7 @@ from django.contrib.auth.decorators import login_required
 from services.report_generator import generer_pdf_local
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
-
+from django.core.files.storage import default_storage
 
 
 
@@ -318,16 +318,62 @@ def confirmation_reservation_paiement(request,id_paiement):
 
     
         valeur_qr_code = numero_billet_final
-        
-        qr_code_file = genereted_qrcode(valeur_qr_code)
-        paiement.qr_code = qr_code_file 
-        qr_code_buffer = qr_code_file 
-        
 
+
+
+
+        # 1. Générer le QR Code (ContentFile)
+        qr_code_content_file = genereted_qrcode(valeur_qr_code)
+
+
+        # Le ContentFile est déjà prêt à être lu pour l'e-mail (BytesIO)
+        qr_code_buffer = qr_code_content_file
+
+
+        # 2. Sauvegarder physiquement le fichier dans MEDIA
+        # Le chemin où Django stocke les fichiers
+        save_path = f"qr_codes/{qr_code_content_file.name}"
+
+
+
+        
+        # Utilisation de default_storage pour enregistrer le ContentFile
+        # Ceci retourne le chemin relatif complet du fichier dans MEDIA
+        try:
+            # Réinitialiser le curseur avant l'enregistrement si genereted_qrcode ne le fait pas à la fin.
+            qr_code_content_file.seek(0)
+            
+            # Enregistre le fichier et retourne le chemin relatif (ex: 'qr_codes/qr_code_...png')
+            final_file_path = default_storage.save(save_path, qr_code_content_file)
+            
+            # 3. Construire l'URL/le chemin relatif pour le CharField
+            # Nous stockons l'URL relative (MEDIA_URL + chemin) dans le CharField
+            # Si votre MEDIA_URL est '/media/', cela donnera '/media/qr_codes/qr_code_...png'
+            qr_code_url = settings.MEDIA_URL + final_file_path 
+            
+            # 4. Assigner la CHAÎNE DE CARACTÈRES au CharField
+            paiement.qr_code = qr_code_url
+            
+        except Exception as e:
+            # Gérer l'échec de la sauvegarde du fichier
+            print(f"Erreur lors de la sauvegarde du QR code: {e}")
+            # Ne pas bloquer la réservation si le fichier n'est pas essentiel (mais c'est rare)
+            paiement.qr_code = "erreur_sauvegarde" 
+            
+            
+        # 5. Finaliser et sauvegarder le modèle
         paiement.numero_billet = numero_billet_final
         paiement.save()
-
-        send_confirmation_email(request.user, paiement, qr_code_buffer)
+        # 6. Envoyer l'e-mail (le buffer doit être réinitialisé avant la lecture)
+        # La fonction d'envoi lira le buffer (ContentFile/BytesIO)
+        try:
+            # Assurez-vous que le buffer est au début pour la lecture par l'e-mail
+            qr_code_buffer.seek(0) 
+            send_confirmation_email(request.user, paiement, qr_code_buffer)
+        except Exception as e:
+            print(f"ALERTE: Échec de l'envoi de l'e-mail: {e}")
+            # Laisse passer l'erreur d'e-mail si la réservation est réussie
+            pass
 
         return redirect('utilisateur:profil')
         
