@@ -21,7 +21,7 @@
         }
         .document-container {
             /* Remplissage réduit pour maximiser l'espace */
-            padding: 10px 30px; 
+            padding: 5px 10px; 
             border: none; 
             box-shadow: none; 
         }
@@ -43,21 +43,21 @@
         .text-justify { text-align: justify; }
         
         /* Marges réduites pour tout faire tenir sur une seule page */
-        .mt-1 { margin-top: 5px !important; }
-        .mt-2 { margin-top: 10px !important; }
-        .mb-1 { margin-bottom: 5px !important; }
-        .mb-2 { margin-bottom: 10px !important; }
-        .my-4, .my-5 { margin-top: 10px; margin-bottom: 10px; } 
-        .header-section { margin-bottom: 10px; }
-        .title-section { margin-bottom: 20px; }
-        .body-section { margin-bottom: 20px; }
-        .footer-section { margin-top: 20px; text-align: right; }
+        .mt-1 { margin-top: 0px !important; }
+        .mt-2 { margin-top: 5px !important; }
+        .mb-1 { margin-bottom: 0px !important; }
+        .mb-2 { margin-bottom: 5px !important; }
+        .my-4, .my-5 { margin-top: 5px; margin-bottom: 10px; } 
+        .header-section { margin-bottom: 5px; }
+        .title-section { margin-bottom: 10px; }
+        .body-section { margin-bottom: 10px; }
+        .footer-section { margin-top: 10px; text-align: right; }
         .legal-info { 
             font-size: 7pt; 
             color: #666; 
-            border-top: 1px solid #ddd; 
-            padding-top: 5px; /* Remplissage réduit */
-            margin-top: 15px !important; /* Marge réduite */
+  
+
+            margin-top: 5px !important; /* Marge réduite */
             text-align: center;
         }
         
@@ -94,7 +94,7 @@
     <div class="container my-4">
         <div class="document-container">
             
-            <div class="header-section row mb-2">
+            <div class="header-section row mb-0">
                 <div class="col-3 text-start">
                     <div class="logo-placeholder">
                         <div class="train-icon"></div>
@@ -103,16 +103,16 @@
                 <div class="col-9 text-end small">
                     <p class="mb-0">Kinshasa, le {{publication_avis.date_avis|date:"d F Y"}}</p>
                 </div>
-                <div class="col-12 text-start mt-2">
-                    <p class="mb-1 fw-bold">OFFICE NATIONAL DES TRANSPORTS</p>
-                    <p class="mb-1 fw-bold">ONATRA s.a.</p>
-                    <p class="mb-1 fst-italic">Direction Générale</p>
+                <div class="col-12 text-start mt-0">
+                    <p class="mb-0 fw-bold">OFFICE NATIONAL DES TRANSPORTS</p>
+                    <p class="mb-0 fw-bold">ONATRA s.a.</p>
+                    <p class="mb-0 fst-italic">Direction Générale</p>
                 </div>
             </div>
 
-            <hr class="my-4">
 
-            <div class="title-section text-center mb-4">
+
+            <div class="title-section text-center mb-2">
                 <h5 class="fw-bold mb-1">AVIS AU PUBLIC N° {{publication_avis.reference_avis | upper}}</h5>
                 <h4 class="fw-bolder text-uppercase">{{publication_avis.titre_avis | upper}}</h4>
             </div>
@@ -123,7 +123,7 @@
                 </p>
             </div>
 
-            <div class="table-responsive mb-4">
+            <div class="table-responsive mb-2">
                 <table class="table table-bordered tariff-table">
                     <thead class="table-dark">
                         <tr>
@@ -150,7 +150,7 @@
                 </table>
             </div>
 
-            <div class="table-responsive mb-4">
+            <div class="table-responsive mb-2">
                 <table class="table table-bordered tariff-table">
                     <thead class="table-dark">
                         <tr>
@@ -180,18 +180,18 @@
                 </table>
             </div>
             
-            <div class="body-section mb-4">
+            <div class="body-section mb-2">
                 <p style="text-indent: 50px;" class="text-justify">
                     {{publication_avis.consigne_avis }}
                 </p>
             </div>
 
-            <div class="footer-section text-end mt-4">
+            <div class="footer-section text-end mt-2">
                 <p class="mb-1">Fait à Kinshasa, le {{publication_avis.date_avis|date:"d F Y"}}</p>
-                <p class="mb-0 fw-bold mt-4">LE DIRECTEUR GENERAL</p>
+                <p class="mb-0 fw-bold mt-2">LE DIRECTEUR GENERAL</p>
             </div>
 
-            <div class="legal-info mt-4 pt-2 border-top text-center">
+            <div class="legal-info mt-2 pt-2 border-top text-center">
                  <p class="mb-0">Société Anonyme Unipersonnelle - capital social : 1.464.432.500.000 FC</p>
                  <p class="mb-0">N°R.C.C.M. CD/KIN/RCCM/14-B-3292-N° ID NAT.01-71-N60911K N°Impôt: AO 700220Y</p>
                  <p class="mb-0">177, Blvd du 30 juin - Kinshasa/Gombe - Email: onatrakin@gmail.com - www.onatra-cd.com</p>
