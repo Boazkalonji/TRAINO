@@ -873,6 +873,18 @@ def telecharger_ticket(request):
     paiement = dernier_paiement
     tarification = paiement.id_tarification
     details_voyage = tarification.id_details_voyage
+
+
+
+    if paiement.qr_code and hasattr(paiement.qr_code, 'url'):
+        # Si le chemin relatif ne fonctionne pas en prod, décommentez la ligne absolue ci-dessous.
+        # qr_code_path_url = request.build_absolute_uri(paiement.qr_code.url)
+        qr_code_path_url = paiement.qr_code.url
+
+
+
+
+
     
     
     context = {
@@ -888,7 +900,7 @@ def telecharger_ticket(request):
         'gare_depart': details_voyage.id_gare_depart.libelle_gare,
         'gare_arrivee': details_voyage.id_gare_arrive.libelle_gare,
         'distance': details_voyage.distance,
-        'qr_code_path': paiement.qr_code.url if paiement.qr_code else None,
+        'qr_code_path': qr_code_path_url,
     }
     
    

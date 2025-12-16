@@ -7,6 +7,17 @@ from io import BytesIO
 from xhtml2pdf import pisa
 from tarification.models import Tarification # Assurez-vous d'importer Tarification si la logique est déplacée
 
+from io import BytesIO
+from django.template.loader import get_template
+from django.conf import settings
+from django.contrib.staticfiles import finders 
+import os 
+from xhtml2pdf import pisa 
+from django.http import HttpResponse
+
+
+
+
 # --- CHEMINS ET CONFIGURATION ---
 
 # IMPORTANT : REMPLACER PAR VOTRE CHEMIN EXACT DE JASPERSTARTER.EXE
@@ -160,61 +171,61 @@ def generer_pdf_local(jasper_filename, output_filename, db_config, parameters=No
 
 
 
-
-
 def link_callback(uri, rel):
-    # Chemin absolu de la ressource dans le dossier STATIC_ROOT
-    path = os.path.join(settings.STATIC_ROOT, uri.replace(settings.STATIC_URL, ""))
+    """
+    Convertit les chemins d'URL (dans le HTML/CSS) en chemins de système de fichiers locaux 
+    pour les ressources (fichiers CSS, images, etc.) afin que pisa puisse les lire.
+    """
     
-    # Validation (facultatif mais recommandé pour le débogage)
-    if not os.path.isfile(path):
-        print(f"FICHIER STATIQUE MANQUANT: {path}")
-        return None # Retourne None si le fichier n'est pas trouvé
+    # 1. Ressources Statiques (CSS, polices, etc.)
+    if uri.startswith(settings.STATIC_URL):
+        # Utilise finders pour localiser le fichier statique (nécessaire en production)
+        path = finders.find(uri.replace(settings.STATIC_URL, ""))
+        if path:
+            return path
+        
+    # 2. Ressources Média (QR Code, images téléchargées)
+    if uri.startswith(settings.MEDIA_URL):
+        # Calcule le chemin absolu du fichier Média dans le système de fichiers
+        # Le MEDIA_ROOT doit être correctement configuré.
+        return os.path.join(settings.MEDIA_ROOT, uri.replace(settings.MEDIA_URL, ""))
 
-    return path
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    # 3. Autres chemins locaux
+    if not uri.startswith('http'):
+        return os.path.join(settings.BASE_DIR, uri)
+    
+    # 4. Chemins externes
+    return uri
 
 
-
+# --- Fonction Principale de Rendu PDF ---
 def render_to_pdf(template_src, context_dict={}):
     """
-    Convertit un template Django en PDF en utilisant xhtml2pdf.
+    Convertit un template Django en PDF en utilisant xhtml2pdf et le link_callback pour les ressources.
     """
-    template = get_template(template_src)
-    html = template.render(context_dict)
-    
-    result = BytesIO()
-    
-    pisa_status = pisa.CreatePDF(
-        html, 
-        dest=result,
-        # UTILISEZ LA FONCTION link_callback DÉFINIE CI-DESSUS
-        link_callback=link_callback 
-    )
-    
-    if pisa_status.err:
-        return None 
-    return result.getvalue()
+    try:
+        template = get_template(template_src)
+        html = template.render(context_dict)
+        result = BytesIO()
+        
+        # pisa.pisaDocument est l'ancienne méthode, mais pisa.CreatePDF est plus courante
+        pisa_status = pisa.CreatePDF(
+            html, 
+            dest=result,
+            encoding='UTF-8',
+            link_callback=link_callback # <-- Le lien vers le gestionnaire de ressources
+        )
+        
+        if not pisa_status.err:
+            return result.getvalue()
+        
+        # En cas d'erreur pisa (probablement le 500 que vous voyez si le fichier est corrompu ou manquant)
+        print(f"Erreur de génération PDF (PISA status: {pisa_status.err}): {pisa_status.log}")
+        return None
 
-
-
-
-
-
+    except Exception as e:
+        print(f"Erreur fatale lors de la génération PDF : {e}")
+        return None
 
 
 
