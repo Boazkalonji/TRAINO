@@ -6,12 +6,19 @@ from .models import Publication_avis,Pubilaction_tarification
 from datetime import datetime
 from tarification.models import Tarification
 from django.db.models import Max
-from services.report_generator import generer_pdf_local
+from services.report_generator import generer_pdf_local,render_to_pdf
 import os
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 
 
+import os
+from django.shortcuts import get_object_or_404
+from django.http import HttpResponse, Http404
+from django.contrib.auth.decorators import login_required
+from django.db.models import Max
+from .models import Publication_avis 
+from tarification.models import Tarification 
 
 
 
@@ -182,6 +189,9 @@ def dernier_publication_avis(request):
         
     return render(request, template_name, context)
 
+
+
+"""
 @login_required
 def telecharger_dernier_publication_avis(request): 
     
@@ -241,35 +251,58 @@ def telecharger_dernier_publication_avis(request):
     else:
         raise Http404("Échec de la génération du rapport.")
 
-
-
 """
 
-    REQUETTE POUR PUBLIER UN AVIS AU PUBLIC 
-    REQUETTE UTILISEE DANS JASPERT REPORT
 
 
-    SELECT reference_avis,
-    	titre_avis,
-    	message_avis,
-    	date_avis,
-    	consigne_avis
-    FROM publication_avis_publication_avis
-    ORDER BY publication_avis_publication_avis.id DESC
-    LIMIT 1
 
 
-    SELECT
-        designation_tarififcation,
-        MAX(pu) AS pu_max
-    FROM
-        tarification_tarification
-    WHERE
 
-        designation_tarififcation IN ('luxe', 'premium', '1èreclasse')
-    GROUP BY
-        designation_tarififcation
-    ORDER BY
-        pu_max DESC
 
-"""
+
+
+
+
+
+@login_required
+def telecharger_dernier_publication_avis(request): 
+    
+
+    publication_avis = Publication_avis.objects.order_by('-id').first()
+
+    if not publication_avis:
+      
+        raise Http404("Aucune publication disponible pour le téléchargement.")
+
+    
+    tarification_avis_pu = Tarification.objects.values(
+        'designation_tarififcation'
+    ).annotate(
+        pu_le_plus_eleve = Max('pu')
+    ).order_by('-pu_le_plus_eleve') 
+    
+ 
+    context = {
+        'publication_avis': publication_avis,
+        'tarification_max': tarification_avis_pu,
+        
+    }
+    
+
+    template_src = 'publication_avis/dernier_publication_avis_pdf_render.html' 
+   
+
+
+    pdf_data = render_to_pdf(template_src, context)
+    
+    if pdf_data:
+        PDF_OUTPUT = f'avis_{publication_avis.reference_avis}_{publication_avis.date_avis}.pdf'
+        
+   
+        response = HttpResponse(pdf_data, content_type='application/pdf')
+        response['Content-Disposition'] = f'attachment; filename="{PDF_OUTPUT}"'
+        return response
+
+    else:
+    
+        raise Http404("Échec de la génération du rapport PDF.")
