@@ -30,7 +30,7 @@ from services.report_generator import generer_pdf_local
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
 from django.core.files.storage import default_storage
-
+import threading
 
 
 @method_decorator(login_required, name='dispatch')
@@ -364,18 +364,31 @@ def confirmation_reservation_paiement(request,id_paiement):
         # 5. Finaliser et sauvegarder le modèle
         paiement.numero_billet = numero_billet_final
         paiement.save()
-        # 6. Envoyer l'e-mail (le buffer doit être réinitialisé avant la lecture)
-        # La fonction d'envoi lira le buffer (ContentFile/BytesIO)
+
         try:
             # Assurez-vous que le buffer est au début pour la lecture par l'e-mail
-            qr_code_buffer.seek(0) 
-            send_confirmation_email(request.user, paiement, qr_code_buffer)
+            qr_code_buffer.seek(0)
+
+            # Créer le thread qui va exécuter l'envoi d'e-mail
+            email_thread = threading.Thread(
+                target=send_confirmation_email,
+                args=(request.user, paiement, qr_code_buffer)
+            )
+
+            # Lancer l'exécution de l'envoi d'e-mail en arrière-plan
+            email_thread.start()
+
+            # Nous ne nous soucions plus du résultat ici, car la requête se termine
+    
         except Exception as e:
-            print(f"ALERTE: Échec de l'envoi de l'e-mail: {e}")
-            # Laisse passer l'erreur d'e-mail si la réservation est réussie
+            # Cette exception ne devrait jamais être atteinte si le thread démarre
+            print(f"ALERTE: Échec du démarrage du thread d'e-mail: {e}")
             pass
+        # ---------------- FIN NOUVEAU CODE -------------------
+
 
         return redirect('utilisateur:profil')
+
         
     else:   
 
