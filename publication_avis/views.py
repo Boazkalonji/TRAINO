@@ -289,7 +289,7 @@ def telecharger_dernier_publication_avis(request):
     }
     
 
-    template_src = 'publication_avis/test_pdf.html' 
+    template_src = 'publication_avis/dernier_publication_avis_pdf_render.html' 
    
 
 

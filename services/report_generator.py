@@ -162,6 +162,22 @@ def generer_pdf_local(jasper_filename, output_filename, db_config, parameters=No
 
 
 
+def link_callback(uri, rel):
+    # Chemin absolu de la ressource dans le dossier STATIC_ROOT
+    path = os.path.join(settings.STATIC_ROOT, uri.replace(settings.STATIC_URL, ""))
+    
+    # Validation (facultatif mais recommandé pour le débogage)
+    if not os.path.isfile(path):
+        print(f"FICHIER STATIQUE MANQUANT: {path}")
+        return None # Retourne None si le fichier n'est pas trouvé
+
+    return path
+
+
+
+
+
+
 
 
 
@@ -179,24 +195,20 @@ def render_to_pdf(template_src, context_dict={}):
     Convertit un template Django en PDF en utilisant xhtml2pdf.
     """
     template = get_template(template_src)
-    html  = template.render(context_dict)
+    html = template.render(context_dict)
     
     result = BytesIO()
     
-
     pisa_status = pisa.CreatePDF(
         html, 
         dest=result,
-        link_callback=lambda uri, rel: os.path.join(settings.STATIC_ROOT, uri.replace(settings.STATIC_URL, ""))
+        # UTILISEZ LA FONCTION link_callback DÉFINIE CI-DESSUS
+        link_callback=link_callback 
     )
     
     if pisa_status.err:
-        return None  
-    return result.getvalue() 
-
-
-
-
+        return None 
+    return result.getvalue()
 
 
 
