@@ -29,12 +29,12 @@ def send_confirmation_email(user, paiement, qr_code_buffer):
     html_content = render_to_string('reservation_paiement/send_confirmation_email.html', context)
     
     
+
+
     email = EmailMessage(
-       
         f"✅ Confirmation de Réservation TRAINO - Billet N°{paiement.numero_billet}", 
-    
         html_content,
-        settings.EMAIL_HOST_USER, 
+        settings.DEFAULT_FROM_EMAIL, 
         [user.email], 
     )
     email.content_subtype = "html"  
