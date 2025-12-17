@@ -364,7 +364,7 @@ def confirmation_reservation_paiement(request,id_paiement):
         # 5. Finaliser et sauvegarder le modèle
         paiement.numero_billet = numero_billet_final
         paiement.save()
-
+        """
         try:
             # Assurez-vous que le buffer est au début pour la lecture par l'e-mail
             qr_code_buffer.seek(0)
@@ -385,8 +385,8 @@ def confirmation_reservation_paiement(request,id_paiement):
             print(f"ALERTE: Échec du démarrage du thread d'e-mail: {e}")
             pass
         # ---------------- FIN NOUVEAU CODE -------------------
-
-
+        """
+        send_confirmation_email(request.user, paiement, qr_code_buffer)
         return redirect('utilisateur:profil')
 
         
