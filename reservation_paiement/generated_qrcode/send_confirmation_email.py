@@ -40,6 +40,7 @@ def send_confirmation_email(user, paiement, qr_code_buffer):
     email.content_subtype = "html"  
 
 
+    qr_code_buffer.seek(0)
     email.attach('qr_code_billet.png', qr_code_buffer.read(), 'image/png')
     
   

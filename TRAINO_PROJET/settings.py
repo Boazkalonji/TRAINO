@@ -254,13 +254,12 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 465
-EMAIL_USE_TLS = False
-EMAIL_USE_SSL = True
+EMAIL_PORT = 587              # On repasse sur 587 pour tester le TLS
+EMAIL_USE_TLS = True          # Obligatoire pour le port 587
+EMAIL_USE_SSL = False         # False si TLS est True
+EMAIL_TIMEOUT = 10            # SI CA NE MARCHE PAS EN 10 SECONDES, ON ARRÊTE (évite le crash 500)
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', 'onatratraino@gmail.com')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
-
-
 
 
 
