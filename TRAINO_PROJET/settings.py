@@ -250,8 +250,16 @@ EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', 'onatratraino@gmail.com')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
 """
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp-relay.brevo.com'
+EMAIL_PORT = 465                # Port SSL sécurisé
+EMAIL_USE_TLS = False           # SSL et TLS ne peuvent pas être True en même temps
+EMAIL_USE_SSL = True            # On active le SSL
+EMAIL_TIMEOUT = 30
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
-
+DEFAULT_FROM_EMAIL = '9e3b0d001@smtp-brevo.com'
 
 SITE_ID = 2  
 ACCOUNT_ACTIVATION_DAYS = 7  
