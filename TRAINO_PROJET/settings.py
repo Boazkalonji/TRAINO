@@ -247,14 +247,10 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-# Utilisation de os.environ.get() : 
-# 1. Il cherche la valeur dans les variables d'environnement de Render.
-# 2. S'il ne la trouve pas (par exemple, en développement local), il utilise la valeur par défaut (la vôtre).
-# NOTE: Le mot de passe D'APPLICATION doit être stocké SANS ESPACES DANS RENDER.
+
 
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', 'onatratraino@gmail.com')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
-
 
 
 

@@ -44,6 +44,11 @@ def send_confirmation_email(user, paiement, qr_code_buffer):
     
   
     try:
-        email.send()
+        print("--- TENTATIVE D'ENVOI EMAIL ---") # Apparaîtra dans les logs Render
+        # ... ton code existant ...
+        email.send(fail_silently=False) # Ajoute fail_silently=False ici
+        print("--- EMAIL ENVOYÉ AVEC SUCCÈS   EMAIL ENVOYÉ AVEC SUCCÈS EMAIL ENVOYÉ AVEC SUCCÈS EMAIL ENVOYÉ AVEC SUCCÈS ---")
     except Exception as e:
-        print(f"Erreur lors de l'envoi de l'e-mail : {e}")
+        # CETTE LIGNE EST CRUCIALE : Elle va nous dire exactement pourquoi ça échoue
+        print(f"!!! ERREUR CRITIQUE EMAIL L'EMAIL NE PAS ENVOIE L'EMAIL NE PAS ENVOIE  L'EMAIL NE PAS ENVOIE  L'EMAIL NE PAS ENVOIE  ")
+        print(f"!!! ERREUR CRITIQUE EMAIL : {e}")
