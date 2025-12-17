@@ -252,8 +252,8 @@ EMAIL_USE_TLS = True
 # 2. S'il ne la trouve pas (par exemple, en développement local), il utilise la valeur par défaut (la vôtre).
 # NOTE: Le mot de passe D'APPLICATION doit être stocké SANS ESPACES DANS RENDER.
 
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', 'pinhotelp@gmail.com')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', 'jgfbxabbdtzswaat')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', 'onatratraino@gmail.com')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
 
 
 
